@@ -29,3 +29,18 @@ test('Gameboard should be able to receive an attack  at a coordinate and determi
 
     expect(ship.hits).toBe(1)
 })
+
+test(`When receiveAttack() is given coordinates 
+    where there is no ship, the Gameboard 
+    should record those coordinates as a missed attack`,()=>{
+        let ship =Ship(3)
+        let board =Gameboard()
+        let coordinates = [[0, 0], [0, 1], [0, 2]]
+
+        board.placeShip(ship,coordinates) //placeShip on board
+        
+        board.receiveAttack(coordinates[0]) //attackboard
+        expect(board.missedAttacks).toEqual([])
+        board.receiveAttack([4,1]) //attackboard with nonexisting ship coordinates
+        expect(board.missedAttacks).toEqual([[4,1]])
+    })

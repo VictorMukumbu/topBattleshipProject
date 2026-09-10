@@ -18,11 +18,13 @@ export function Gameboard(){
                 return ship.ship.hit()
             }            
         }    
-        return  
+        return  this.missedAttacks.push(coordinate)
     }
+
     return{
         ships:[],
         placeShip,
         receiveAttack,
+        missedAttacks:[],
     }
 }
