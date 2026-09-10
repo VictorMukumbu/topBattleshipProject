@@ -44,3 +44,21 @@ test(`When receiveAttack() is given coordinates
         board.receiveAttack([4,1]) //attackboard with nonexisting ship coordinates
         expect(board.missedAttacks).toEqual([[4,1]])
     })
+
+   test(`The Gameboard should be able to report 
+    whether all of its ships have been sunk`,()=>{
+        let ship =Ship(3)
+        let board =Gameboard()
+        let coordinates = [[0, 0], [0, 1], [0, 2]]
+
+        board.placeShip(ship,coordinates) //placeShip on board
+        
+        board.receiveAttack(coordinates[0]) //attackboard
+        expect(board.allShipsSunk()).toBe(false)
+        board.receiveAttack([4,1]) //attackboard with nonexisting ship coordinates
+        expect(board.allShipsSunk()).toBe(false)
+        board.receiveAttack(coordinates[1]) //attackboard
+        expect(board.allShipsSunk()).toBe(false)
+        board.receiveAttack(coordinates[2]) //attackboard
+        expect(board.allShipsSunk()).toBe(true)
+    }) 

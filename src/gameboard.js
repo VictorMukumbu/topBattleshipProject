@@ -21,10 +21,18 @@ export function Gameboard(){
         return  this.missedAttacks.push(coordinate)
     }
 
+    function allShipsSunk(){
+        return this.ships.every((ship)=>
+            {
+                return ship.ship.isSunk()===true
+            })        
+    }
+
     return{
         ships:[],
         placeShip,
         receiveAttack,
         missedAttacks:[],
+        allShipsSunk,
     }
 }
