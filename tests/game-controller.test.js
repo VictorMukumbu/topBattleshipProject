@@ -15,3 +15,9 @@ test(`When GameController() is created,
         let gameController =GameController()
         expect(gameController.currentPlayer).toBe(gameController.player1)
      })
+test(`GameController should be able to switch
+     the current player from player1 to player2`,()=>{
+        let gameController =GameController()
+        gameController.changeCurrentPlayer()
+        expect(gameController.currentPlayer).toBe(gameController.player2)
+     })

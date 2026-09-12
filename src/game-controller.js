@@ -6,9 +6,22 @@ export function GameController(){
 
     let currentPlayer =player1
 
+    function changeCurrentPlayer(){
+        if(currentPlayer ===player1){
+            return currentPlayer =player2
+        }
+        if(currentPlayer ===player2){
+            return currentPlayer = player1
+        }
+        return
+    }
+
     return{
         player1,
         player2,
-        currentPlayer,
+        get currentPlayer(){
+            return currentPlayer
+        },
+        changeCurrentPlayer,
     }
 }
