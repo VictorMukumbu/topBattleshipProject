@@ -10,3 +10,8 @@ test(`theres one human player and one computer player`,()=>{
     expect(gameController.player1.type).toBe("human")
     expect(gameController.player2.type).toBe("computer")
 })
+test(`When GameController() is created,
+     player1 should be the current player`,()=>{
+        let gameController =GameController()
+        expect(gameController.currentPlayer).toBe(gameController.player1)
+     })
