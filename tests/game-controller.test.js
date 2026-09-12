@@ -5,3 +5,8 @@ test(`calling GameController() creates an object
         expect(Object.hasOwn(gameController, 'player1')).toBe(true)
         expect(Object.hasOwn(gameController, 'player2')).toBe(true)
     })
+test(`theres one human player and one computer player`,()=>{
+    let gameController =GameController()
+    expect(gameController.player1.type).toBe("human")
+    expect(gameController.player2.type).toBe("computer")
+})

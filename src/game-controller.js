@@ -1,8 +1,8 @@
 import { Player } from "./player";
 
 export function GameController(){
-    let player1 =Player()
-    let player2 =Player()
+    let player1 =Player("human")
+    let player2 =Player("computer")
 
     return{
         player1,
