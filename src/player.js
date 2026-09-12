@@ -1,8 +1,13 @@
 import { Gameboard } from "./gameboard";
 export function Player(){
-    let gameboard = Gameboard()
+    let board = Gameboard()
+
+    function attackOpponent(opponentBoard,coordinate){
+        return opponentBoard.receiveAttack(coordinate)
+    }
 
     return {
-        gameboard,
+        board,
+        attackOpponent,
     }
 }
