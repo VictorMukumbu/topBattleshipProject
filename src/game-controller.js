@@ -25,6 +25,15 @@ export function GameController(){
         }        
     }
 
+    function controllerAttack(coordinate){
+        if(currentPlayer ===player1){
+             return currentPlayer.attackOpponent(player2.board,coordinate)
+        }
+        if(currentPlayer ===player2){
+            return currentPlayer.attackOpponent(player1.board,coordinate)
+        }
+    }
+
     return{
         player1,
         player2,
@@ -33,5 +42,6 @@ export function GameController(){
         },
         changeCurrentPlayer,
         isGameOver,
+        controllerAttack,
     }
 }

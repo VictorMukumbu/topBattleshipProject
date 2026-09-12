@@ -53,3 +53,12 @@ test(`GameController can report that the
         gameController.player1.attackOpponent(gameController.player2.board,coordinates[2]) //attackboard
         expect(gameController.isGameOver()).toBe(true)
      })
+     test(`GameController can make the current player
+         attack the opponent at a coordinate`,()=>{
+        let gameController = GameController()
+        let ship =Ship(3)
+        let coordinates =[[0,1],[1,2],[2,3]]
+        gameController.player2.board.placeShip(ship,coordinates) //placeShip on board        
+        gameController.controllerAttack(coordinates[0]) //attackboard
+        expect(ship.hits).toBe(1)
+     })
