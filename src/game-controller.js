@@ -1,5 +1,5 @@
 import { Player } from "./player";
-
+import { Gameboard } from "./gameboard";
 export function GameController(){
     let player1 =Player("human")
     let player2 =Player("computer")
@@ -16,6 +16,15 @@ export function GameController(){
         return
     }
 
+    function isGameOver(){
+        if(currentPlayer===player1){
+            return player2.board.allShipsSunk()
+        }
+        if(currentPlayer === player2){
+            return player1.board.allShipsSunk()
+        }        
+    }
+
     return{
         player1,
         player2,
@@ -23,5 +32,6 @@ export function GameController(){
             return currentPlayer
         },
         changeCurrentPlayer,
+        isGameOver,
     }
 }
