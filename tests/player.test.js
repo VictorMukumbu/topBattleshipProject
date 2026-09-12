@@ -23,3 +23,9 @@ test(`When a Player attacks an opponent's Gameboard at
 
         expect(ship.hits).toBe(1)
      })
+test(`Calling Player() for a computer player 
+    should create a player that can be identified 
+    as a computer player.`,()=>{
+        let computerPlayer = Player('computer')
+        expect(computerPlayer.type).toBe("computer")
+    })

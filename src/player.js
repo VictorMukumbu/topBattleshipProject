@@ -1,5 +1,5 @@
 import { Gameboard } from "./gameboard";
-export function Player(){
+export function Player(type){
     let board = Gameboard()
 
     function attackOpponent(opponentBoard,coordinate){
@@ -9,5 +9,6 @@ export function Player(){
     return {
         board,
         attackOpponent,
+        type,
     }
 }
