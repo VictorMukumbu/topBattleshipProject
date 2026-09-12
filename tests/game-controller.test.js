@@ -62,3 +62,14 @@ test(`GameController can report that the
         gameController.controllerAttack(coordinates[0]) //attackboard
         expect(ship.hits).toBe(1)
      })
+
+     test(`when the computer is the current player, 
+        it should be able to make an attack.`,()=>{
+            let gameController =GameController()
+            let ship = Ship(1)
+            let coordinates = [[0,1]]
+            gameController.player1.board.placeShip(ship,coordinates)
+            gameController.changeCurrentPlayer()
+            gameController.controllerAttack(coordinates)
+            expect(ship.hits).toBe(1)
+        })
