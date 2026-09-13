@@ -22,6 +22,10 @@ export function placeShipLogic(startCoordinate,length,placeShipDirection){
             )
             counter++            
         } 
-        return computedCoordinates              
+        if(computedCoordinates[length-1][0]<8){
+            return computedCoordinates
+        }
+        return "invalid"
+                      
     }
 }

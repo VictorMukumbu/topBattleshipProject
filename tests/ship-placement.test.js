@@ -31,3 +31,10 @@ test(`preventing a ship  from being placed
        expect(placeShipLogic([2,6],length,
         placeShipDirection)).toBe("invalid") 
     })
+test(`preventing a ship  from being placed 
+    outside the 8×8 board vertically`,()=>{
+       let length = 3
+       let placeShipDirection = 'vertical'
+       expect(placeShipLogic([6,2],length,
+        placeShipDirection)).toBe("invalid") 
+    })
