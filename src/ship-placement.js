@@ -8,7 +8,10 @@ export function placeShipLogic(startCoordinate,length,placeShipDirection){
             )
             counter++            
         }
-        if(computedCoordinates[length-1][1]<8){
+        if(computedCoordinates[length-1][1]<8 
+            && computedCoordinates[0][0]>=0
+            && computedCoordinates[0][1]>=0
+        ){
             return computedCoordinates
         }
         return "invalid" 
@@ -22,7 +25,9 @@ export function placeShipLogic(startCoordinate,length,placeShipDirection){
             )
             counter++            
         } 
-        if(computedCoordinates[length-1][0]<8){
+        if(computedCoordinates[length-1][0]<8
+             && computedCoordinates[0][0]>=0
+            && computedCoordinates[0][1]>=0){
             return computedCoordinates
         }
         return "invalid"
