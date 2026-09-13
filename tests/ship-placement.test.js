@@ -24,3 +24,10 @@ test(`vertical placement
             placeShipDirection)).toEqual(
                 [ [2,3], [3,3], [4,3] ])
      })
+test(`preventing a ship  from being placed 
+    outside the 8×8 board horizontally`,()=>{
+       let length = 3
+       let placeShipDirection = 'horizontal'
+       expect(placeShipLogic([2,6],length,
+        placeShipDirection)).toBe("invalid") 
+    })

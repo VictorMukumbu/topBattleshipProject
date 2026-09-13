@@ -8,7 +8,10 @@ export function placeShipLogic(startCoordinate,length,placeShipDirection){
             )
             counter++            
         }
-        return computedCoordinates
+        if(computedCoordinates[length-1][1]<8){
+            return computedCoordinates
+        }
+        return "invalid" 
     }
     if(placeShipDirection === "vertical"){
         let computedCoordinates =[]
@@ -18,7 +21,7 @@ export function placeShipLogic(startCoordinate,length,placeShipDirection){
                 [startCoordinate[0]+counter,(startCoordinate[1])]
             )
             counter++            
-        }
-        return computedCoordinates
+        } 
+        return computedCoordinates              
     }
 }
