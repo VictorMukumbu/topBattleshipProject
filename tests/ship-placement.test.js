@@ -41,7 +41,7 @@ test(`preventing a ship  from being placed
 
 test(`a ship cannot start outside the board`,()=>{
        let length = 3
-       let placeShipDirection = 'vertical' ||"horizontal"
+       let placeShipDirection = 'vertical' 
        expect(placeShipLogic([-1,2],length,
         placeShipDirection)).toBe("invalid") 
        expect(placeShipLogic([1,-2],length,
@@ -49,3 +49,38 @@ test(`a ship cannot start outside the board`,()=>{
        expect(placeShipLogic([-1,-2],length,
         placeShipDirection)).toBe("invalid")
     })
+test(`a horizontal ship cannot start outside the board`,()=>{
+    let length = 3
+    let placeShipDirection = "horizontal"
+
+    expect(placeShipLogic([-1,2],length,
+        placeShipDirection)).toBe("invalid")
+    expect(placeShipLogic([1,-2],length,
+        placeShipDirection)).toBe("invalid")    
+    expect(placeShipLogic([-1,-2],length,
+        placeShipDirection)).toBe("invalid")
+})
+test(`starting coordinate is 8 or greater 
+    with horizontal direction`,()=>{
+    let length = 3
+    let placeShipDirection = "horizontal" 
+
+    expect(placeShipLogic([8,2],length,
+        placeShipDirection)).toBe("invalid")
+    expect(placeShipLogic([2,8],length,
+        placeShipDirection)).toBe("invalid")    
+    expect(placeShipLogic([8,8],length,
+        placeShipDirection)).toBe("invalid")
+})
+test(`starting coordinate is 8 or greater 
+    with vertical direction`,()=>{
+    let length = 3
+    let placeShipDirection = "vertical" 
+
+    expect(placeShipLogic([8,2],length,
+        placeShipDirection)).toBe("invalid")
+    expect(placeShipLogic([2,8],length,
+        placeShipDirection)).toBe("invalid")    
+    expect(placeShipLogic([8,8],length,
+        placeShipDirection)).toBe("invalid")
+})
