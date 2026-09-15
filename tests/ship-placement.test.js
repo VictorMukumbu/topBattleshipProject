@@ -84,3 +84,23 @@ test(`starting coordinate is 8 or greater
     expect(placeShipLogic([8,8],length,
         placeShipDirection)).toBe("invalid")
 })
+
+test(`a ship cannot overlap an existing ship`, () => {
+    let length = 3
+    let placeShipDirection = "horizontal"
+
+    let occupiedCoordinates = [
+        [2, 3],
+        [2, 4],
+        [2, 5]
+    ]
+
+    expect(
+        placeShipLogic(
+            [2, 4],
+            length,
+            placeShipDirection,
+            occupiedCoordinates
+        )
+    ).toBe("invalid")
+})
