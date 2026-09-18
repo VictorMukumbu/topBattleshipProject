@@ -128,3 +128,46 @@ test(`a ship cannot be longer than the board`, () => {
         placeShipLogic([2, 2], length, placeShipDirection)
     ).toBe("invalid")
 })
+
+test(`a ship of length 8 can fit exactly across the board`, () => {
+    let length = 8
+    let placeShipDirection = "horizontal"
+
+    expect(
+        placeShipLogic([2, 0], length, placeShipDirection)
+    ).toEqual([
+        [2, 0],
+        [2, 1],
+        [2, 2],
+        [2, 3],
+        [2, 4],
+        [2, 5],
+        [2, 6],
+        [2, 7]
+    ])
+})
+test(`a ship of length 8 can fit exactly down the board`, () => {
+    let length = 8
+    let placeShipDirection = "vertical"
+
+    expect(
+        placeShipLogic([0, 2], length, placeShipDirection)
+    ).toEqual([
+        [0, 2],
+        [1, 2],
+        [2, 2],
+        [3, 2],
+        [4, 2],
+        [5, 2],
+        [6, 2],
+        [7, 2]
+    ])
+})
+test(`a starting coordinate must contain a row and column`, () => {
+    let length = 3
+    let placeShipDirection = "horizontal"
+
+    expect(
+        placeShipLogic([2], length, placeShipDirection)
+    ).toBe("invalid")
+})

@@ -4,6 +4,11 @@ export function placeShipLogic(
     placeShipDirection,
     occupiedCoordinates = []
 ) {
+
+    if(!Array.isArray(startCoordinate) 
+    ||startCoordinate.length !== 2){
+        return "invalid"
+    }
     let computedCoordinates = []
 
     if(placeShipDirection !=="horizontal" 
