@@ -10,7 +10,7 @@ export function placeShipLogic(
         && placeShipDirection !== "vertical"){
             return "invalid"
         }
-    if(length<=0){
+    if(length<=0 || length>8){
         return "invalid"
     }
 

@@ -120,3 +120,11 @@ test(`a ship cannot have a length of zero`, () => {
         placeShipLogic([2, 2], length, placeShipDirection)
     ).toBe("invalid")
 })
+test(`a ship cannot be longer than the board`, () => {
+    let length = 9
+    let placeShipDirection = "horizontal"
+
+    expect(
+        placeShipLogic([2, 2], length, placeShipDirection)
+    ).toBe("invalid")
+})
