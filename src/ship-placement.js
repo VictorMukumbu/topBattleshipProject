@@ -6,6 +6,11 @@ export function placeShipLogic(
 ) {
     let computedCoordinates = []
 
+    if(placeShipDirection !=="horizontal" 
+        && placeShipDirection !== "vertical"){
+            return "invalid"
+        }
+
     if (placeShipDirection === "horizontal") {
         let counter = 0
 

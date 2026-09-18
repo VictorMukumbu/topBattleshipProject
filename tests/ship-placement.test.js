@@ -104,3 +104,11 @@ test(`a ship cannot overlap an existing ship`, () => {
         )
     ).toBe("invalid")
 })
+test(`invalid directions are rejected`,()=>{
+    let length = 3
+    let placeShipDirection = "diagonal" 
+
+    expect(placeShipLogic([2,2],length,
+        placeShipDirection)).toBe("invalid")
+    
+})
