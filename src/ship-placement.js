@@ -10,6 +10,9 @@ export function placeShipLogic(
         && placeShipDirection !== "vertical"){
             return "invalid"
         }
+    if(length<=0){
+        return "invalid"
+    }
 
     if (placeShipDirection === "horizontal") {
         let counter = 0

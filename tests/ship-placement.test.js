@@ -112,3 +112,11 @@ test(`invalid directions are rejected`,()=>{
         placeShipDirection)).toBe("invalid")
     
 })
+test(`a ship cannot have a length of zero`, () => {
+    let length = 0
+    let placeShipDirection = "horizontal"
+
+    expect(
+        placeShipLogic([2, 2], length, placeShipDirection)
+    ).toBe("invalid")
+})
