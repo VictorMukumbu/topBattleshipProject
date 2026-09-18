@@ -171,11 +171,11 @@ test(`a starting coordinate must contain a row and column`, () => {
         placeShipLogic([2], length, placeShipDirection)
     ).toBe("invalid")
 })
-test(`starting coordinates must contain numbers`, () => {
-    let length = 3
-    let placeShipDirection = "horizontal"
-
+test.each([
+    ["a", 3],
+    [2.5, 3],
+])("starting coordinates must contain valid numbers: %p", (x, y) => {
     expect(
-        placeShipLogic(["a", 3], length, placeShipDirection)
+        placeShipLogic([x, y], 3, "horizontal")
     ).toBe("invalid")
 })

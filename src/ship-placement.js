@@ -6,10 +6,9 @@ export function placeShipLogic(
 ) {
 
     if(!Array.isArray(startCoordinate) 
-    ||startCoordinate.length !== 2 
-    ||startCoordinate.some(coordinate=> typeof coordinate
-        !=="number"
-    )){
+        ||startCoordinate.length !== 2 
+        ||startCoordinate.some(coordinate => !Number.isInteger(coordinate))
+    ){
         return "invalid"
     }
     let computedCoordinates = []
