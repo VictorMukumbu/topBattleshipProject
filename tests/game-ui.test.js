@@ -9,3 +9,8 @@ test(`GameUi() provides access to both boards.`,()=>{
 test(`GameUi() provides a renderBoard function.`,()=>{
     expect(Object.hasOwn(GameUi(),"renderBoard")).toBe(true)
 })
+test(`renderBoard() returns the board it receives.`,()=>{
+    const ui = GameUi()
+
+    expect(ui.renderBoard(ui.playerBoard)).toBe(ui.playerBoard)
+})
