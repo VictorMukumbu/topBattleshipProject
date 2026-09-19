@@ -5,9 +5,12 @@ export function GameUi(){
     let playerBoard = gameController.player1.board
     let opponentBoard = gameController.player2.board
 
+    function renderBoard(){}
+
     return {
         gameController,
         playerBoard,
         opponentBoard,
+        renderBoard,
     }
 }

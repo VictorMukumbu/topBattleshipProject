@@ -6,3 +6,6 @@ test(`GameUi() provides access to both boards.`,()=>{
     expect(Object.hasOwn(GameUi(),"playerBoard")).toBe(true)
     expect(Object.hasOwn(GameUi(),"opponentBoard")).toBe(true)
 })
+test(`GameUi() provides a renderBoard function.`,()=>{
+    expect(Object.hasOwn(GameUi(),"renderBoard")).toBe(true)
+})
