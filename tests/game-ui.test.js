@@ -23,3 +23,16 @@ test(`renderBoard() returns the board's missed attacks.`,()=>{
 
     expect(Object.hasOwn(renderedBoard, "missedAttacks")).toBe(true)
 })
+test(`renderBoard() returns ship coordinates.`,()=>{
+    const ui = GameUi()
+
+    const ship = {
+        coordinates: [[2, 3], [2, 4], [2, 5]]
+    }
+
+    ui.playerBoard.placeShip(ship, ship.coordinates)
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.ships[0].coordinates).toEqual(ship.coordinates)
+})
