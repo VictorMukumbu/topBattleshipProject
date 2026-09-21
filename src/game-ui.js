@@ -7,7 +7,9 @@ export function GameUi(){
 
     function renderBoard(board){
         return{
-            ships: board.ships
+            ships: board.ships,
+            missedAttacks: board.missedAttacks,
+
         }
     }
 

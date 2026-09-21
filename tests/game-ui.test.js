@@ -17,3 +17,9 @@ test(`renderBoard() returns board rendering data.`,()=>{
 
     expect(Object.hasOwn(renderedBoard, "ships")).toBe(true)
 })
+test(`renderBoard() returns the board's missed attacks.`,()=>{
+    const ui = GameUi()
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(Object.hasOwn(renderedBoard, "missedAttacks")).toBe(true)
+})
