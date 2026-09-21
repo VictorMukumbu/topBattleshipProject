@@ -47,3 +47,11 @@ test(`renderBoard() returns missed attack coordinates.`,()=>{
 
     expect(renderedBoard.missedAttacks).toContain(coordinate)
 })
+
+test(`renderBoard() creates 64 cells for a board.`,()=>{
+    const ui = GameUi()
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells).toHaveLength(64)
+})

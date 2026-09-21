@@ -9,6 +9,7 @@ export function GameUi(){
         return{
             ships: board.ships,
             missedAttacks: board.missedAttacks,
+            cells: Array.from({ length: 64 })
 
         }
     }
