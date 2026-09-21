@@ -6,7 +6,7 @@ export function GameUi(){
     let opponentBoard = gameController.player2.board
 
     function renderBoard(board){
-        return board
+        return board.ships
     }
 
     return {
