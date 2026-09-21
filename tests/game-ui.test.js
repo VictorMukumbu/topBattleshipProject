@@ -36,3 +36,14 @@ test(`renderBoard() returns ship coordinates.`,()=>{
 
     expect(renderedBoard.ships[0].coordinates).toEqual(ship.coordinates)
 })
+test(`renderBoard() returns missed attack coordinates.`,()=>{
+    const ui = GameUi()
+
+    const coordinate = [3, 4]
+
+    ui.playerBoard.receiveAttack(coordinate)
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.missedAttacks).toContain(coordinate)
+})
