@@ -14,3 +14,8 @@ test(`renderBoard() returns the board it receives.`,()=>{
 
     expect(ui.renderBoard(ui.playerBoard)).toBe(ui.playerBoard)
 })
+test(`renderBoard() can render the opponent board.`,()=>{
+    const ui = GameUi()
+
+    expect(ui.renderBoard(ui.opponentBoard)).toBe(ui.opponentBoard)
+})
