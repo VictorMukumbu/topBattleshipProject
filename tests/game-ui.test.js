@@ -55,3 +55,11 @@ test(`renderBoard() creates 64 cells for a board.`,()=>{
 
     expect(renderedBoard.cells).toHaveLength(64)
 })
+test(`renderBoard() gives each cell a coordinate.`,()=>{
+    const ui = GameUi()
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[0]).toEqual([0, 0])
+    expect(renderedBoard.cells[63]).toEqual([7, 7])
+})
