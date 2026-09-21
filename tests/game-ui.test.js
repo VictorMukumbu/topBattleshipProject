@@ -10,8 +10,10 @@ test(`GameUi() provides a renderBoard function.`,()=>{
     expect(Object.hasOwn(GameUi(),"renderBoard")).toBe(true)
 })
 
-test(`renderBoard() returns the board's ships.`,()=>{
-    const ui = GameUi()
 
-    expect(ui.renderBoard(ui.playerBoard)).toBe(ui.playerBoard.ships)
+test(`renderBoard() returns board rendering data.`,()=>{
+    const ui = GameUi()
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(Object.hasOwn(renderedBoard, "ships")).toBe(true)
 })
