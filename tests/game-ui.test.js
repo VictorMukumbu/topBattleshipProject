@@ -125,3 +125,10 @@ test(`renderBoard() identifies cells that were not missed.`,()=>{
     expect(renderedBoard.cells[0].missed).toBe(false)
 })
 
+test(`renderBoard() can render the opponent board.`,()=>{
+    const ui = GameUi()
+
+    const renderedBoard = ui.renderBoard(ui.opponentBoard)
+
+    expect(renderedBoard.cells).toHaveLength(64)
+})
