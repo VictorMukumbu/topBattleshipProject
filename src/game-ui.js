@@ -47,5 +47,6 @@ export function GameUi(){
         opponentBoard,
         renderBoard,
         isGameOver: gameController.isGameOver,
+        currentPlayer: gameController.currentPlayer,
     }
 }

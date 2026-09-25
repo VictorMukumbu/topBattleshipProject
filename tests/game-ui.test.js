@@ -137,3 +137,8 @@ test(`GameUi() provides access to the game-over state.`,()=>{
 
     expect(Object.hasOwn(ui, "isGameOver")).toBe(true)
 })
+test(`GameUi() provides access to the current player.`,()=>{
+    const ui = GameUi()
+
+    expect(Object.hasOwn(ui, "currentPlayer")).toBe(true)
+})
