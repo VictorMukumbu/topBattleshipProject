@@ -106,3 +106,22 @@ test(`renderBoard() identifies cells occupied by hit ships.`,()=>{
 
     expect(renderedBoard.cells[19].hit).toBe(true)
 })
+
+test(`renderBoard() identifies missed cells.`,()=>{
+    const ui = GameUi()
+
+    ui.playerBoard.receiveAttack([3, 4])
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[28].missed).toBe(true)
+})
+
+test(`renderBoard() identifies cells that were not missed.`,()=>{
+    const ui = GameUi()
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[0].missed).toBe(false)
+})
+
