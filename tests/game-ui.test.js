@@ -1,4 +1,3 @@
-
 import { GameUi } from "../src/game-ui"
 import { Ship } from "../src/ship"
 
@@ -132,26 +131,25 @@ test(`renderBoard() can render the opponent board.`,()=>{
 
     expect(renderedBoard.cells).toHaveLength(64)
 })
+
 test(`GameUi() provides access to the game-over state.`,()=>{
     const ui = GameUi()
 
     expect(Object.hasOwn(ui, "isGameOver")).toBe(true)
 })
+
 test(`GameUi() provides access to the current player.`,()=>{
     const ui = GameUi()
 
     expect(Object.hasOwn(ui, "currentPlayer")).toBe(true)
 })
+
 test(`GameUi() provides an attack function.`,()=>{
     const ui = GameUi()
 
     expect(Object.hasOwn(ui, "attack")).toBe(true)
 })
-test(`GameUi() provides a change player function.`,()=>{
-    const ui = GameUi()
 
-    expect(Object.hasOwn(ui, "changeCurrentPlayer")).toBe(true)
-})
 test(`attack() sends an attack to the opponent board.`,()=>{
     const ui = GameUi()
 
@@ -160,4 +158,31 @@ test(`attack() sends an attack to the opponent board.`,()=>{
     ui.attack(coordinate)
 
     expect(ui.opponentBoard.missedAttacks).toContain(coordinate)
+})
+
+test(`GameUi() provides a change player function.`,()=>{
+    const ui = GameUi()
+
+    expect(Object.hasOwn(ui, "changeCurrentPlayer")).toBe(true)
+})
+
+test(`changeCurrentPlayer() changes the current player.`,()=>{
+    const ui = GameUi()
+
+    const firstPlayer = ui.currentPlayer
+
+    ui.changeCurrentPlayer()
+
+    expect(ui.currentPlayer).not.toBe(firstPlayer)
+})
+
+test(`attack() followed by changeCurrentPlayer() changes the turn.`,()=>{
+    const ui = GameUi()
+
+    const firstPlayer = ui.currentPlayer
+
+    ui.attack([2, 3])
+    ui.changeCurrentPlayer()
+
+    expect(ui.currentPlayer).not.toBe(firstPlayer)
 })

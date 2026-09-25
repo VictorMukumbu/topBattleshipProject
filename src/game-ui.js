@@ -55,7 +55,9 @@ export function GameUi(){
         opponentBoard,
         renderBoard,
         isGameOver: gameController.isGameOver,
-        currentPlayer: gameController.currentPlayer,
+        get currentPlayer(){
+            return gameController.currentPlayer
+        },
         attack,
         changeCurrentPlayer,
     }
