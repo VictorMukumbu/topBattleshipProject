@@ -152,3 +152,12 @@ test(`GameUi() provides a change player function.`,()=>{
 
     expect(Object.hasOwn(ui, "changeCurrentPlayer")).toBe(true)
 })
+test(`attack() sends an attack to the opponent board.`,()=>{
+    const ui = GameUi()
+
+    const coordinate = [2, 3]
+
+    ui.attack(coordinate)
+
+    expect(ui.opponentBoard.missedAttacks).toContain(coordinate)
+})
