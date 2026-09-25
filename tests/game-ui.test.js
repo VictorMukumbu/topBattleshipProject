@@ -132,3 +132,8 @@ test(`renderBoard() can render the opponent board.`,()=>{
 
     expect(renderedBoard.cells).toHaveLength(64)
 })
+test(`GameUi() provides access to the game-over state.`,()=>{
+    const ui = GameUi()
+
+    expect(Object.hasOwn(ui, "isGameOver")).toBe(true)
+})
