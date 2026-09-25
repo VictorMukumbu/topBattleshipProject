@@ -1,15 +1,19 @@
+
 import { GameUi } from "../src/game-ui"
+import { Ship } from "../src/ship"
+
 test(`calling GameUi accesses a GameController`,()=>{
     expect(Object.hasOwn(GameUi(),"gameController")).toBe(true)
 })
+
 test(`GameUi() provides access to both boards.`,()=>{
     expect(Object.hasOwn(GameUi(),"playerBoard")).toBe(true)
     expect(Object.hasOwn(GameUi(),"opponentBoard")).toBe(true)
 })
+
 test(`GameUi() provides a renderBoard function.`,()=>{
     expect(Object.hasOwn(GameUi(),"renderBoard")).toBe(true)
 })
-
 
 test(`renderBoard() returns board rendering data.`,()=>{
     const ui = GameUi()
@@ -17,12 +21,14 @@ test(`renderBoard() returns board rendering data.`,()=>{
 
     expect(Object.hasOwn(renderedBoard, "ships")).toBe(true)
 })
+
 test(`renderBoard() returns the board's missed attacks.`,()=>{
     const ui = GameUi()
     const renderedBoard = ui.renderBoard(ui.playerBoard)
 
     expect(Object.hasOwn(renderedBoard, "missedAttacks")).toBe(true)
 })
+
 test(`renderBoard() returns ship coordinates.`,()=>{
     const ui = GameUi()
 
@@ -36,6 +42,7 @@ test(`renderBoard() returns ship coordinates.`,()=>{
 
     expect(renderedBoard.ships[0].coordinates).toEqual(ship.coordinates)
 })
+
 test(`renderBoard() returns missed attack coordinates.`,()=>{
     const ui = GameUi()
 
@@ -55,6 +62,7 @@ test(`renderBoard() creates 64 cells for a board.`,()=>{
 
     expect(renderedBoard.cells).toHaveLength(64)
 })
+
 test(`renderBoard() gives each cell a coordinate.`,()=>{
     const ui = GameUi()
 
@@ -63,6 +71,7 @@ test(`renderBoard() gives each cell a coordinate.`,()=>{
     expect(renderedBoard.cells[0].coordinate).toEqual([0, 0])
     expect(renderedBoard.cells[63].coordinate).toEqual([7, 7])
 })
+
 test(`renderBoard() identifies cells occupied by ships.`,()=>{
     const ui = GameUi()
 
@@ -83,4 +92,17 @@ test(`renderBoard() identifies unoccupied cells.`,()=>{
     const renderedBoard = ui.renderBoard(ui.playerBoard)
 
     expect(renderedBoard.cells[0].occupied).toBe(false)
+})
+
+test(`renderBoard() identifies cells occupied by hit ships.`,()=>{
+    const ui = GameUi()
+
+    const ship = Ship(3)
+    ship.hit()
+
+    ui.playerBoard.placeShip(ship, [[2, 3], [2, 4], [2, 5]])
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[19].hit).toBe(true)
 })

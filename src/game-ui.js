@@ -11,15 +11,20 @@ export function GameUi(){
             let row = Math.floor(index / 8)
             let column = index % 8
 
-            let occupied = board.ships.some(ship =>
-                ship.coordinates.some(coordinate =>
-                    coordinate[0] === row &&
-                    coordinate[1] === column
-                )
+            let ship = board.ships.find(ship =>
+            ship.coordinates.some(coordinate =>
+                coordinate[0] === row &&
+                coordinate[1] === column
             )
+        )
+
+        let occupied = ship !== undefined
+        let hit = ship !== undefined && ship.ship.hits > 0
+
             return {
                 coordinate :[row, column],
-                occupied
+                occupied,
+                hit
             }
         })
         return{
