@@ -76,3 +76,11 @@ test(`renderBoard() identifies cells occupied by ships.`,()=>{
 
     expect(renderedBoard.cells[19].occupied).toBe(true)
 })
+
+test(`renderBoard() identifies unoccupied cells.`,()=>{
+    const ui = GameUi()
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[0].occupied).toBe(false)
+})
