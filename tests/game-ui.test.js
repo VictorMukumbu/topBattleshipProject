@@ -142,3 +142,8 @@ test(`GameUi() provides access to the current player.`,()=>{
 
     expect(Object.hasOwn(ui, "currentPlayer")).toBe(true)
 })
+test(`GameUi() provides an attack function.`,()=>{
+    const ui = GameUi()
+
+    expect(Object.hasOwn(ui, "attack")).toBe(true)
+})

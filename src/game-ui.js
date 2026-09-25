@@ -41,6 +41,10 @@ export function GameUi(){
         }
     }
 
+    function attack(coordinate){
+        return gameController.controllerAttack(coordinate)
+    }
+
     return {
         gameController,
         playerBoard,
@@ -48,5 +52,6 @@ export function GameUi(){
         renderBoard,
         isGameOver: gameController.isGameOver,
         currentPlayer: gameController.currentPlayer,
+        attack,
     }
 }
