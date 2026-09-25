@@ -11,7 +11,16 @@ export function GameUi(){
             let row = Math.floor(index / 8)
             let column = index % 8
 
-            return [row, column]
+            let occupied = board.ships.some(ship =>
+                ship.coordinates.some(coordinate =>
+                    coordinate[0] === row &&
+                    coordinate[1] === column
+                )
+            )
+            return {
+                coordinate :[row, column],
+                occupied
+            }
         })
         return{
             ships: board.ships,

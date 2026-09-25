@@ -60,6 +60,19 @@ test(`renderBoard() gives each cell a coordinate.`,()=>{
 
     const renderedBoard = ui.renderBoard(ui.playerBoard)
 
-    expect(renderedBoard.cells[0]).toEqual([0, 0])
-    expect(renderedBoard.cells[63]).toEqual([7, 7])
+    expect(renderedBoard.cells[0].coordinate).toEqual([0, 0])
+    expect(renderedBoard.cells[63].coordinate).toEqual([7, 7])
+})
+test(`renderBoard() identifies cells occupied by ships.`,()=>{
+    const ui = GameUi()
+
+    const ship = {
+        coordinates: [[2, 3], [2, 4], [2, 5]]
+    }
+
+    ui.playerBoard.placeShip(ship, ship.coordinates)
+
+    const renderedBoard = ui.renderBoard(ui.playerBoard)
+
+    expect(renderedBoard.cells[19].occupied).toBe(true)
 })
