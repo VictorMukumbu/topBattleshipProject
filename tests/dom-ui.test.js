@@ -12,3 +12,8 @@ test(`DomUi() provides a board container`, () => {
 
     expect(Object.hasOwn(gameUi, "boardContainer")).toBe(true)
 })
+test(`DomUi() gives the board container a board class`, () => {
+    const ui = DomUi()
+
+    expect(ui.boardContainer.classList.contains("board")).toBe(true)
+})
