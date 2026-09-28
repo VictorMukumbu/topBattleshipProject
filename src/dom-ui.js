@@ -27,9 +27,18 @@ export function DomUi() {
     }
     function renderBoard(board){
         let renderedBoard = ui.renderBoard(board)
+
+        let container
+        if (board === ui.playerBoard) {
+            container = boardContainer
+        }
+        if (board === ui.opponentBoard) {
+            container = opponentBoardContainer
+        }
+
         for(const cell of renderedBoard.cells){
             let coordinate = cell.coordinate
-            let domCell = Array.from(boardContainer.children).find(domCell =>
+            let domCell = Array.from(container.children).find(domCell =>
                 domCell.dataset.row === String(coordinate[0]) &&
                 domCell.dataset.column === String(coordinate[1])
             )

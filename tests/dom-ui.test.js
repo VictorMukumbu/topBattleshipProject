@@ -172,3 +172,19 @@ test(`The last opponent board cell has coordinate [7, 7]`, () => {
     expect(ui.opponentBoardContainer.children[63].dataset.row).toBe("7")
     expect(ui.opponentBoardContainer.children[63].dataset.column).toBe("7")
 })
+test(`DomUi() marks an occupied opponent board cell`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        coordinates: [[2, 3]]
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, ship.coordinates)
+
+    ui.renderBoard(ui.ui.opponentBoard)
+
+    expect(
+        ui.opponentBoardContainer.children[19]
+            .classList.contains("ship")
+    ).toBe(true)
+})
