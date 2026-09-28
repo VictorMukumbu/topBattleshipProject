@@ -263,3 +263,23 @@ test(`DomUi() renders multiple opponent board cell states`, () => {
             .classList.contains("missed")
     ).toBe(true)
 })
+test(`clicking an opponent cell attacks that coordinate`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, [[2, 3]])
+
+    ui.opponentBoardContainer.children[19].click()
+
+    expect(ship.hits).toBe(1)
+})

@@ -24,6 +24,12 @@ export function DomUi() {
 
         opponentCell.dataset.row =Math.floor(i/8)
         opponentCell.dataset.column=Math.floor(i%8)
+        opponentCell.addEventListener("click", () => {
+            ui.attack([
+                Number(opponentCell.dataset.row),
+                Number(opponentCell.dataset.column)
+            ])
+        })
     }
     function renderBoard(board){
         let renderedBoard = ui.renderBoard(board)
