@@ -89,3 +89,10 @@ test(`DomUi() leaves an unattacked empty DOM cell unmarked`, () => {
     expect(cell.classList.contains("hit")).toBe(false)
     expect(cell.classList.contains("missed")).toBe(false)
 })
+test(`DomUi() adds the board container to the document`, () => {
+    DomUi()
+
+    expect(document.body.contains(
+        document.querySelector(".board")
+    )).toBe(true)
+})

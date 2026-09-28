@@ -3,6 +3,7 @@ export function DomUi() {
     let ui = GameUi()
     let boardContainer = document.createElement("div")
     boardContainer.classList.add("board")
+    document.body.appendChild(boardContainer)
     for(let i=0;i<64;i++){
         let cell = document.createElement("div")
         boardContainer.appendChild(cell)
