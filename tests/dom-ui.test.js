@@ -34,3 +34,15 @@ test(`The last board cell has coordinate [7, 7]`, () => {
     expect(ui.boardContainer.children[63].dataset.row).toBe("7")
     expect(ui.boardContainer.children[63].dataset.column).toBe("7")
 })
+test(`DomUi() marks an occupied DOM cell`, () => {
+    const ui = DomUi()
+    const ship = {
+        coordinates: [[2, 3]]
+    }
+
+    ui.ui.playerBoard.placeShip(ship, ship.coordinates)
+
+    ui.renderBoard(ui.ui.playerBoard)
+
+    expect(ui.boardContainer.children[19].classList.contains("ship")).toBe(true)
+})

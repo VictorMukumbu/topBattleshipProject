@@ -9,10 +9,24 @@ export function DomUi() {
         cell.dataset.row =Math.floor(i/8)
         cell.dataset.column=Math.floor(i%8)
     }
+    function renderBoard(board){
+        let renderedBoard = ui.renderBoard(board)
+        for(const cell of renderedBoard.cells){
+            let coordinate = cell.coordinate
+            let domCell = Array.from(boardContainer.children).find(domCell =>
+                domCell.dataset.row === String(coordinate[0]) &&
+                domCell.dataset.column === String(coordinate[1])
+            )
+           if(cell.occupied){
+            domCell.classList.add("ship")
+           } 
+        }
+    }
 
     return{
         ui,
         boardContainer,
+        renderBoard,
     }
 
 }
