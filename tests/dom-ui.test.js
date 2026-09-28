@@ -154,3 +154,8 @@ test(`DomUi() provides an opponent board container`, () => {
 
     expect(Object.hasOwn(ui, "opponentBoardContainer")).toBe(true)
 })
+test(`DomUi() creates 64 opponent board cells`, () => {
+    const ui = DomUi()
+
+    expect(ui.opponentBoardContainer.children).toHaveLength(64)
+})
