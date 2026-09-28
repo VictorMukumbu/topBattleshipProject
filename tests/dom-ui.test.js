@@ -96,3 +96,10 @@ test(`DomUi() adds the board container to the document`, () => {
         document.querySelector(".board")
     )).toBe(true)
 })
+test(`DomUi() gives every board cell a cell class`, () => {
+    const ui = DomUi()
+
+    for (const cell of ui.boardContainer.children) {
+        expect(cell.classList.contains("cell")).toBe(true)
+    }
+})
