@@ -200,3 +200,27 @@ test(`DomUi() marks a missed opponent board cell`, () => {
             .classList.contains("missed")
     ).toBe(true)
 })
+test(`DomUi() marks a hit opponent board cell`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, [[2, 3]])
+    ui.ui.opponentBoard.receiveAttack([2, 3])
+
+    ui.renderBoard(ui.ui.opponentBoard)
+
+    expect(
+        ui.opponentBoardContainer.children[19]
+            .classList.contains("hit")
+    ).toBe(true)
+})
