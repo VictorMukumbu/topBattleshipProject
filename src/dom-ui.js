@@ -1,13 +1,18 @@
 import { GameUi } from "./game-ui";
 export function DomUi() {
     let ui = GameUi()
+
     let boardContainer = document.createElement("div")
+    let opponentBoardContainer = document.createElement("div")
+    
     boardContainer.classList.add("board")
+    opponentBoardContainer.classList.add("board")
+
     document.body.appendChild(boardContainer)
     for(let i=0;i<64;i++){
         let cell = document.createElement("div")
         cell.classList.add("cell")
-        
+
         boardContainer.appendChild(cell)
         cell.dataset.row =Math.floor(i/8)
         cell.dataset.column=Math.floor(i%8)
@@ -35,6 +40,7 @@ export function DomUi() {
     return{
         ui,
         boardContainer,
+        opponentBoardContainer,
         renderBoard,
     }
 

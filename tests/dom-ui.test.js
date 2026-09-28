@@ -149,3 +149,8 @@ test(`DomUi() marks only the attacked ship cell as hit`, () => {
         ui.boardContainer.children[21].classList.contains("hit")
     ).toBe(false)
 })
+test(`DomUi() provides an opponent board container`, () => {
+    const ui = DomUi()
+
+    expect(Object.hasOwn(ui, "opponentBoardContainer")).toBe(true)
+})
