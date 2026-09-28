@@ -115,5 +115,37 @@ test(`DomUi() does not duplicate cell classes when rendering twice`, () => {
     ui.renderBoard(ui.ui.playerBoard)
     ui.renderBoard(ui.ui.playerBoard)
 
-    expect(ui.boardContainer.children[19].className).toBe("ship")
+    expect(ui.boardContainer.children[19].className).toBe("cell ship")
+})
+test(`DomUi() marks only the attacked ship cell as hit`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 3,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.playerBoard.placeShip(ship, [[2, 3], [2, 4], [2, 5]])
+
+    ui.ui.playerBoard.receiveAttack([2, 4])
+
+    ui.renderBoard(ui.ui.playerBoard)
+
+    expect(
+        ui.boardContainer.children[19].classList.contains("hit")
+    ).toBe(false)
+
+    expect(
+        ui.boardContainer.children[20].classList.contains("hit")
+    ).toBe(true)
+
+    expect(
+        ui.boardContainer.children[21].classList.contains("hit")
+    ).toBe(false)
 })

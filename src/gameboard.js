@@ -15,6 +15,7 @@ export function Gameboard(){
             let hasMatch = ship.coordinates.some(coordinate => coordinate.join(',') === targetStr);
 
             if(hasMatch){
+                this.hitAttacks.push(coordinate)
                 return ship.ship.hit()
             }            
         }    
@@ -33,6 +34,7 @@ export function Gameboard(){
         placeShip,
         receiveAttack,
         missedAttacks:[],
+        hitAttacks:[],
         allShipsSunk,
     }
 }

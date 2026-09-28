@@ -19,7 +19,10 @@ export function GameUi(){
             )
 
             let occupied = ship !== undefined
-            let hit = ship !== undefined && ship.ship.hits > 0
+            let hit = board.hitAttacks.some(coordinate =>
+                coordinate[0] === row &&
+                coordinate[1] === column
+            )
 
             let missed = board.missedAttacks.some(coordinate =>
                 coordinate[0] === row &&
