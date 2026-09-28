@@ -78,3 +78,14 @@ test(`DomUi() marks a hit DOM cell`, () => {
         ui.boardContainer.children[19].classList.contains("hit")
     ).toBe(true)
 })
+test(`DomUi() leaves an unattacked empty DOM cell unmarked`, () => {
+    const ui = DomUi()
+
+    ui.renderBoard(ui.ui.playerBoard)
+
+    const cell = ui.boardContainer.children[0]
+
+    expect(cell.classList.contains("ship")).toBe(false)
+    expect(cell.classList.contains("hit")).toBe(false)
+    expect(cell.classList.contains("missed")).toBe(false)
+})
