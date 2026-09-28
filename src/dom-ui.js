@@ -18,8 +18,11 @@ export function DomUi() {
                 domCell.dataset.column === String(coordinate[1])
             )
            if(cell.occupied){
-            domCell.classList.add("ship")
+                domCell.classList.add("ship")
            } 
+           if (cell.missed) { 
+                domCell.classList.add("missed") 
+            }
         }
     }
 

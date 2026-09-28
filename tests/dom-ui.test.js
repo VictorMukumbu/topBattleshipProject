@@ -46,3 +46,12 @@ test(`DomUi() marks an occupied DOM cell`, () => {
 
     expect(ui.boardContainer.children[19].classList.contains("ship")).toBe(true)
 })
+test(`DomUi() marks a missed DOM cell`, () => {
+    const ui = DomUi()
+
+    ui.ui.playerBoard.receiveAttack([3, 4])
+
+    ui.renderBoard(ui.ui.playerBoard)
+
+    expect(ui.boardContainer.children[28].classList.contains("missed")).toBe(true)
+})
