@@ -188,3 +188,15 @@ test(`DomUi() marks an occupied opponent board cell`, () => {
             .classList.contains("ship")
     ).toBe(true)
 })
+test(`DomUi() marks a missed opponent board cell`, () => {
+    const ui = DomUi()
+
+    ui.ui.opponentBoard.receiveAttack([3, 4])
+
+    ui.renderBoard(ui.ui.opponentBoard)
+
+    expect(
+        ui.opponentBoardContainer.children[28]
+            .classList.contains("missed")
+    ).toBe(true)
+})
