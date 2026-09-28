@@ -103,3 +103,17 @@ test(`DomUi() gives every board cell a cell class`, () => {
         expect(cell.classList.contains("cell")).toBe(true)
     }
 })
+test(`DomUi() does not duplicate cell classes when rendering twice`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        coordinates: [[2, 3]]
+    }
+
+    ui.ui.playerBoard.placeShip(ship, ship.coordinates)
+
+    ui.renderBoard(ui.ui.playerBoard)
+    ui.renderBoard(ui.ui.playerBoard)
+
+    expect(ui.boardContainer.children[19].className).toBe("ship")
+})
