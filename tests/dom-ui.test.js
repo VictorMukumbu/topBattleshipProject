@@ -224,3 +224,42 @@ test(`DomUi() marks a hit opponent board cell`, () => {
             .classList.contains("hit")
     ).toBe(true)
 })
+test(`DomUi() renders multiple opponent board cell states`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 2,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(
+        ship,
+        [[2, 3], [2, 4]]
+    )
+
+    ui.ui.opponentBoard.receiveAttack([2, 3])
+    ui.ui.opponentBoard.receiveAttack([3, 4])
+
+    ui.renderBoard(ui.ui.opponentBoard)
+
+    expect(
+        ui.opponentBoardContainer.children[19]
+            .classList.contains("hit")
+    ).toBe(true)
+
+    expect(
+        ui.opponentBoardContainer.children[20]
+            .classList.contains("ship")
+    ).toBe(true)
+
+    expect(
+        ui.opponentBoardContainer.children[28]
+            .classList.contains("missed")
+    ).toBe(true)
+})
