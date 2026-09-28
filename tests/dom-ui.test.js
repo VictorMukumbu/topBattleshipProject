@@ -159,3 +159,16 @@ test(`DomUi() creates 64 opponent board cells`, () => {
 
     expect(ui.opponentBoardContainer.children).toHaveLength(64)
 })
+test(`The first opponent board cell has coordinate [0, 0]`, () => {
+    const ui = DomUi()
+
+    expect(ui.opponentBoardContainer.children[0].dataset.row).toBe("0")
+    expect(ui.opponentBoardContainer.children[0].dataset.column).toBe("0")
+})
+
+test(`The last opponent board cell has coordinate [7, 7]`, () => {
+    const ui = DomUi()
+
+    expect(ui.opponentBoardContainer.children[63].dataset.row).toBe("7")
+    expect(ui.opponentBoardContainer.children[63].dataset.column).toBe("7")
+})
