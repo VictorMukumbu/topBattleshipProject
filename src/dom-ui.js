@@ -23,6 +23,9 @@ export function DomUi() {
            if (cell.missed) { 
                 domCell.classList.add("missed") 
             }
+            if (cell.hit) {
+                domCell.classList.add("hit")
+            }
         }
     }
 

@@ -55,3 +55,26 @@ test(`DomUi() marks a missed DOM cell`, () => {
 
     expect(ui.boardContainer.children[28].classList.contains("missed")).toBe(true)
 })
+test(`DomUi() marks a hit DOM cell`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.playerBoard.placeShip(ship, [[2, 3]])
+    ui.ui.playerBoard.receiveAttack([2, 3])
+
+    ui.renderBoard(ui.ui.playerBoard)
+
+    expect(
+        ui.boardContainer.children[19].classList.contains("hit")
+    ).toBe(true)
+})
