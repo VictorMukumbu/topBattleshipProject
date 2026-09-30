@@ -385,3 +385,17 @@ test(`rendering the opponent board does not modify the player board`, () => {
             .classList.contains("ship")
     ).toBe(true)
 })
+test(`DomUi() provides access to the current player`, () => {
+    const ui = DomUi()
+
+    expect(ui.currentPlayer).toBe(ui.ui.currentPlayer)
+})
+test(`DomUi() can change the current player`, () => {
+    const ui = DomUi()
+
+    const firstPlayer = ui.currentPlayer
+
+    ui.changeCurrentPlayer()
+
+    expect(ui.currentPlayer).not.toBe(firstPlayer)
+})

@@ -10,7 +10,7 @@ export function DomUi() {
 
     document.body.appendChild(boardContainer)
     document.body.appendChild(opponentBoardContainer)
-    
+
     for(let i=0;i<64;i++){
         let cell = document.createElement("div")
         let opponentCell = document.createElement("div")
@@ -68,6 +68,12 @@ export function DomUi() {
         boardContainer,
         opponentBoardContainer,
         renderBoard,
+        get currentPlayer(){
+            return ui.currentPlayer
+        },
+        changeCurrentPlayer(){
+            return ui.changeCurrentPlayer()
+        },
     }
 
 }
