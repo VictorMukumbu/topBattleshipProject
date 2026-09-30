@@ -9,6 +9,8 @@ export function DomUi() {
     opponentBoardContainer.classList.add("board")
 
     document.body.appendChild(boardContainer)
+    document.body.appendChild(opponentBoardContainer)
+    
     for(let i=0;i<64;i++){
         let cell = document.createElement("div")
         let opponentCell = document.createElement("div")
