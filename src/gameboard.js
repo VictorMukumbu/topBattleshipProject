@@ -9,6 +9,17 @@ export function Gameboard(){
         return this.ships.push(expectedShips)
     }
     function receiveAttack(coordinate) {
+        const alreadyAttacked = [
+                ...this.missedAttacks,
+                ...this.hitAttacks
+            ].some(attackedCoordinate =>
+                attackedCoordinate[0] === coordinate[0] &&
+                attackedCoordinate[1] === coordinate[1]
+            )
+
+            if (alreadyAttacked) {
+                return
+            }
         for (const ship of this.ships){           
             let targetStr = coordinate.join(',');
 

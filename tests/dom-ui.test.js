@@ -283,3 +283,105 @@ test(`clicking an opponent cell attacks that coordinate`, () => {
 
     expect(ship.hits).toBe(1)
 })
+test(`clicking an opponent ship cell marks it as hit`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, [[2, 3]])
+
+    ui.opponentBoardContainer.children[19].click()
+
+    expect(
+        ui.opponentBoardContainer.children[19]
+            .classList.contains("hit")
+    ).toBe(true)
+})
+test(`clicking an empty opponent cell marks it as missed`, () => {
+    const ui = DomUi()
+
+    ui.opponentBoardContainer.children[28].click()
+
+    expect(
+        ui.opponentBoardContainer.children[28]
+            .classList.contains("missed")
+    ).toBe(true)
+})
+test(`clicking an opponent cell attacks its own coordinate`, () => {
+    const ui = DomUi()
+
+    ui.opponentBoardContainer.children[63].click()
+
+    expect(ui.ui.opponentBoard.missedAttacks)
+        .toContainEqual([7, 7])
+})
+test(`clicking a player board cell does not attack the opponent`, () => {
+    const ui = DomUi()
+
+    ui.boardContainer.children[19].click()
+
+    expect(ui.ui.opponentBoard.missedAttacks).toHaveLength(0)
+    expect(ui.ui.opponentBoard.hitAttacks).toHaveLength(0)
+})
+
+test(`clicking the same opponent cell twice does not create two attacks`, () => {
+    const ui = DomUi()
+
+    ui.opponentBoardContainer.children[28].click()
+    ui.opponentBoardContainer.children[28].click()
+
+    expect(ui.ui.opponentBoard.missedAttacks).toHaveLength(1)
+})
+test(`a hit cell is not marked as missed`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, [[2, 3]])
+
+    ui.opponentBoardContainer.children[19].click()
+
+    const cell = ui.opponentBoardContainer.children[19]
+
+    expect(cell.classList.contains("hit")).toBe(true)
+    expect(cell.classList.contains("missed")).toBe(false)
+})
+test(`rendering the opponent board does not modify the player board`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        coordinates: [[2, 3]]
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, ship.coordinates)
+
+    ui.renderBoard(ui.ui.opponentBoard)
+
+    expect(
+        ui.boardContainer.children[19]
+            .classList.contains("ship")
+    ).toBe(false)
+
+    expect(
+        ui.opponentBoardContainer.children[19]
+            .classList.contains("ship")
+    ).toBe(true)
+})

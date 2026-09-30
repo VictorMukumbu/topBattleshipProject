@@ -29,6 +29,7 @@ export function DomUi() {
                 Number(opponentCell.dataset.row),
                 Number(opponentCell.dataset.column)
             ])
+            renderBoard(ui.opponentBoard)
         })
     }
     function renderBoard(board){
