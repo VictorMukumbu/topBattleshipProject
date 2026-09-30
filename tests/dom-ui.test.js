@@ -399,3 +399,12 @@ test(`DomUi() can change the current player`, () => {
 
     expect(ui.currentPlayer).not.toBe(firstPlayer)
 })
+test(`clicking an opponent cell changes the current player`, () => {
+    const ui = DomUi()
+
+    const firstPlayer = ui.currentPlayer
+
+    ui.opponentBoardContainer.children[0].click()
+
+    expect(ui.currentPlayer).not.toBe(firstPlayer)
+})

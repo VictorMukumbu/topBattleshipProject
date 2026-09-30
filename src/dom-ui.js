@@ -32,6 +32,7 @@ export function DomUi() {
                 Number(opponentCell.dataset.column)
             ])
             renderBoard(ui.opponentBoard)
+            ui.changeCurrentPlayer()
         })
     }
     function renderBoard(board){
