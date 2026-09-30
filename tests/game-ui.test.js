@@ -97,9 +97,9 @@ test(`renderBoard() identifies cells occupied by hit ships.`,()=>{
     const ui = GameUi()
 
     const ship = Ship(3)
-    ship.hit()
 
     ui.playerBoard.placeShip(ship, [[2, 3], [2, 4], [2, 5]])
+    ui.playerBoard.receiveAttack([2, 3])
 
     const renderedBoard = ui.renderBoard(ui.playerBoard)
 
