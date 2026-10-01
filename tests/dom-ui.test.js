@@ -390,6 +390,7 @@ test(`DomUi() provides access to the current player`, () => {
 
     expect(ui.currentPlayer).toBe(ui.ui.currentPlayer)
 })
+
 test(`DomUi() can change the current player`, () => {
     const ui = DomUi()
 
@@ -399,12 +400,81 @@ test(`DomUi() can change the current player`, () => {
 
     expect(ui.currentPlayer).not.toBe(firstPlayer)
 })
-test(`clicking an opponent cell changes the current player`, () => {
+
+test(`computer player makes an attack after the human turn`, () => {
     const ui = DomUi()
 
-    const firstPlayer = ui.currentPlayer
+    const ship = {
+        hits: 0,
+        length: 2,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(
+        ship,
+        [[0, 0], [0, 1]]
+    )
+
+    const originalRandom = Math.random
+
+    Math.random = () => 0.5
 
     ui.opponentBoardContainer.children[0].click()
 
-    expect(ui.currentPlayer).not.toBe(firstPlayer)
+    Math.random = originalRandom
+
+    expect(
+        ui.ui.playerBoard.missedAttacks.length +
+        ui.ui.playerBoard.hitAttacks.length
+    ).toBe(1)
+})
+
+test(`computer player does not repeat an attacked coordinate`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 2,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(
+        ship,
+        [[0, 1], [0, 2]]
+    )
+
+    ui.ui.playerBoard.receiveAttack([0, 0])
+
+    const originalRandom = Math.random
+
+    const randomValues = [
+        0,
+        0,
+        0.2,
+        0.2
+    ]
+
+    Math.random = () => randomValues.shift()
+
+    ui.opponentBoardContainer.children[1].click()
+
+    Math.random = originalRandom
+
+    const attacks = [
+        ...ui.ui.playerBoard.missedAttacks,
+        ...ui.ui.playerBoard.hitAttacks
+    ]
+
+    expect(attacks).toHaveLength(2)
+    expect(attacks[1]).not.toEqual([0, 0])
 })
