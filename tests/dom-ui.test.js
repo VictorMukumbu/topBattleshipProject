@@ -722,5 +722,22 @@ test(`DomUi creates a fleet for the human player`, () => {
     expect(ui.playerFleet.map(ship => ship.length))
         .toEqual([5, 4, 3, 3, 2])
 })
+test(`DomUi renders one selection button for each ship`, () => {
+    const ui = DomUi()
 
+    ui.renderFleet()
+
+    expect(ui.fleetContainer.children).toHaveLength(5)
+})
+test(`clicking a ship button selects that ship`, () => {
+    const ui = DomUi()
+
+    ui.renderFleet()
+
+    const firstShip = ui.playerFleet[0]
+
+    ui.fleetContainer.children[0].click()
+
+    expect(ui.selectedShip).toBe(firstShip)
+})
 

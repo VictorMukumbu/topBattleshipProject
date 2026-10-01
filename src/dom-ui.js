@@ -22,12 +22,17 @@ export function DomUi() {
     opponentBoardContainer.classList.add("board")
 
     let directionButton = document.createElement("button")
-
     directionButton.textContent = "Vertical"
-
     if (!directionButton.parentElement) {
         document.body.appendChild(directionButton)
     }
+
+    let fleetContainer = document.createElement("div")
+    fleetContainer.classList.add("fleet")
+    if (!fleetContainer.parentElement) {
+        document.body.appendChild(fleetContainer)
+    }
+
 
     function changePlaceShipDirection() {
         if (placeShipDirection === "horizontal") {
@@ -177,6 +182,26 @@ export function DomUi() {
         return selectedShip
     }
 
+    function renderFleet() {
+        fleetContainer.innerHTML = ""
+
+        playerFleet.forEach((ship, index) => {
+            const button = document.createElement("button")
+
+            button.classList.add("ship-selection")
+            button.dataset.shipIndex = index
+            button.textContent = `Ship ${ship.length}`
+
+            button.addEventListener("click", () => {
+                selectShip(ship)
+            })
+
+            fleetContainer.appendChild(button)
+        })
+
+        return fleetContainer
+    }
+
     return {
         ui,
         boardContainer,
@@ -211,5 +236,7 @@ export function DomUi() {
         changePlaceShipDirection,
         selectShip,
         playerFleet,
+        renderFleet,
+        fleetContainer,
     }
 }
