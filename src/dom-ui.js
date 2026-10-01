@@ -41,6 +41,12 @@ export function DomUi() {
         document.body.appendChild(fleetContainer)
     }
 
+    let gameStatus = document.createElement("div")
+    gameStatus.classList.add("game-status")
+    if (!gameStatus.parentElement) {
+        document.body.appendChild(gameStatus)
+    }
+
     function changePlaceShipDirection() {
         if (placeShipDirection === "horizontal") {
             placeShipDirection = "vertical"
@@ -167,6 +173,7 @@ export function DomUi() {
 
         if (ui.isGameOver()) {
             renderBoards()
+            renderGameStatus()
             return
         }
 
@@ -176,12 +183,14 @@ export function DomUi() {
 
         if (ui.isGameOver()) {
             renderBoards()
+            renderGameStatus()
             return
         }
 
         ui.changeCurrentPlayer()
 
         renderBoards()
+        renderGameStatus()
     }
 
     function placeShip(
@@ -216,6 +225,7 @@ export function DomUi() {
 
         renderBoard(ui.playerBoard)
         renderFleet()
+        renderGameStatus()
 
         return coordinates
     }
@@ -224,11 +234,24 @@ export function DomUi() {
         return availableShips.length === 0
     }
 
-    
+    function renderGameStatus() {
+        if (!isSetupComplete()) {
+            gameStatus.textContent = "Place all your ships."
+            return
+        }
+
+        if (ui.isGameOver()) {
+            gameStatus.textContent = "Game over!"
+            return
+        }
+
+        gameStatus.textContent = "Your turn."
+    }
 
     // Initial rendering.
     renderBoards()
     renderFleet()
+    renderGameStatus()
 
     return {
         ui,
@@ -273,5 +296,7 @@ export function DomUi() {
 
         changePlaceShipDirection,
         isSetupComplete,
+        gameStatus,
+        renderGameStatus,
     }
 }

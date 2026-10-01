@@ -870,5 +870,49 @@ test(`DomUi() sets up computer ships without overlapping`, () => {
     expect(uniqueCoordinates.size).toBe(coordinates.length)
 })
 
+test(`DomUi() provides a game status element`, () => {
+    const ui = DomUi()
+
+    expect(ui.gameStatus).toBeDefined()
+    expect(ui.gameStatus.classList.contains("game-status"))
+        .toBe(true)
+})
+
+test(`DomUi() shows the setup status initially`, () => {
+    const ui = DomUi()
+
+    expect(ui.gameStatus.textContent)
+        .toBe("Place all your ships.")
+})
+
+test(`DomUi() shows the player's turn after setup is complete`, () => {
+    const ui = DomUi()
+
+    completeSetup(ui)
+
+    expect(ui.gameStatus.textContent)
+        .toBe("Your turn.")
+})
+
+test(`DomUi() shows game over when the human wins`, () => {
+    const ui = DomUi()
+
+    ui.ui.opponentBoard.ships = []
+
+    const ship = Ship(1)
+
+    ui.ui.opponentBoard.placeShip(
+        ship,
+        [[0, 0]]
+    )
+
+    completeSetup(ui)
+
+    ui.opponentBoardContainer.children[0].click()
+
+    expect(ui.gameStatus.textContent)
+        .toBe("Game over!")
+})
+
 
 
