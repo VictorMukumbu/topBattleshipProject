@@ -214,6 +214,10 @@ export function DomUi() {
         return coordinates
     }
 
+    function isSetupComplete() {
+        return availableShips.length === 0
+    }
+
     // Initial rendering.
     renderBoards()
     renderFleet()
@@ -260,5 +264,6 @@ export function DomUi() {
         },
 
         changePlaceShipDirection,
+        isSetupComplete,
     }
 }

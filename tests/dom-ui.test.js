@@ -774,5 +774,34 @@ test(`invalid ship placement keeps the ship available`, () => {
     expect(ui.availableShips).toContain(ship)
     expect(ui.ui.playerBoard.ships).toHaveLength(0)
 })
+test(`DomUi reports that setup is incomplete when ships remain`, () => {
+    const ui = DomUi()
+
+    expect(ui.isSetupComplete()).toBe(false)
+})
+
+test(`DomUi reports setup complete when all ships are placed`, () => {
+    const ui = DomUi()
+
+    const placements = [
+        [ui.playerFleet[0], [0, 0]],
+        [ui.playerFleet[1], [2, 0]],
+        [ui.playerFleet[2], [4, 0]],
+        [ui.playerFleet[3], [6, 0]],
+        [ui.playerFleet[4], [7, 6]],
+    ]
+
+    placements.forEach(([ship, coordinate]) => {
+        ui.selectShip(ship)
+
+        const cellIndex =
+            coordinate[0] * 8 + coordinate[1]
+
+        ui.boardContainer.children[cellIndex].click()
+    })
+
+    expect(ui.availableShips).toHaveLength(0)
+    expect(ui.isSetupComplete()).toBe(true)
+})
 
 
