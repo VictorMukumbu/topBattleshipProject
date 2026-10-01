@@ -2,6 +2,7 @@ import { GameUi } from "./game-ui";
 
 export function DomUi() {
     let ui = GameUi()
+    let selectedCoordinates = []
 
     let boardContainer = document.createElement("div")
     let opponentBoardContainer = document.createElement("div")
@@ -27,6 +28,13 @@ export function DomUi() {
 
         opponentCell.dataset.row = Math.floor(i / 8)
         opponentCell.dataset.column = Math.floor(i % 8)
+
+        cell.addEventListener("click", () => {
+            selectedCoordinates.push([
+                Number(cell.dataset.row),
+                Number(cell.dataset.column)
+            ])
+        })
 
         opponentCell.addEventListener("click", () => {
             ui.attack([
@@ -83,6 +91,12 @@ export function DomUi() {
         }
     }
 
+    function placeShip(ship) {
+        ui.playerBoard.placeShip(ship, [...selectedCoordinates])
+        selectedCoordinates.length = 0
+        renderBoard(ui.playerBoard)
+    }
+
     function computerAttack() {
         let row
         let column
@@ -107,6 +121,8 @@ export function DomUi() {
         boardContainer,
         opponentBoardContainer,
         renderBoard,
+        selectedCoordinates,
+        placeShip,
 
         get currentPlayer() {
             return ui.currentPlayer

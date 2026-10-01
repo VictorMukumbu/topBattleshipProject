@@ -503,3 +503,50 @@ test(`computer does not attack after the human wins`, () => {
         ui.ui.playerBoard.hitAttacks.length
     ).toBe(0)
 })
+test(`clicking a player board cell selects that coordinate for ship placement`, () => {
+    const ui = DomUi()
+
+    ui.boardContainer.children[19].click()
+
+    expect(ui.selectedCoordinates).toContainEqual([2, 3])
+})
+test(`DomUi() provides a function for placing a ship`, () => {
+    const ui = DomUi()
+
+    expect(typeof ui.placeShip).toBe("function")
+})
+
+test(`placeShip() places a ship using the selected coordinates`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        coordinates: [[2, 3], [2, 4], [2, 5]]
+    }
+
+    ui.boardContainer.children[19].click()
+    ui.boardContainer.children[20].click()
+    ui.boardContainer.children[21].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.ui.playerBoard.ships).toHaveLength(1)
+    expect(ui.ui.playerBoard.ships[0].ship).toBe(ship)
+    expect(ui.ui.playerBoard.ships[0].coordinates)
+        .toEqual([[2, 3], [2, 4], [2, 5]])
+})
+
+test(`placeShip() clears the selected coordinates after placing a ship`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        coordinates: [[2, 3], [2, 4], [2, 5]]
+    }
+
+    ui.boardContainer.children[19].click()
+    ui.boardContainer.children[20].click()
+    ui.boardContainer.children[21].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.selectedCoordinates).toHaveLength(0)
+})
