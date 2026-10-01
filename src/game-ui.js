@@ -1,12 +1,12 @@
 import { GameController } from "./game-controller.js"
 
-export function GameUi(){
+export function GameUi() {
     let gameController = GameController()
+
     let playerBoard = gameController.player1.board
     let opponentBoard = gameController.player2.board
 
-    function renderBoard(board){
-
+    function renderBoard(board) {
         let cells = Array.from({ length: 64 }, (_, index) => {
             let row = Math.floor(index / 8)
             let column = index % 8
@@ -19,6 +19,7 @@ export function GameUi(){
             )
 
             let occupied = ship !== undefined
+
             let hit = board.hitAttacks.some(coordinate =>
                 coordinate[0] === row &&
                 coordinate[1] === column
@@ -33,7 +34,7 @@ export function GameUi(){
                 coordinate: [row, column],
                 occupied,
                 hit,
-                missed
+                missed,
             }
         })
 
@@ -44,11 +45,15 @@ export function GameUi(){
         }
     }
 
-    function attack(coordinate){
+    function attack(coordinate) {
         return gameController.controllerAttack(coordinate)
     }
 
-    function changeCurrentPlayer(){
+    function computerAttack() {
+        return gameController.computerAttack()
+    }
+
+    function changeCurrentPlayer() {
         return gameController.changeCurrentPlayer()
     }
 
@@ -57,11 +62,15 @@ export function GameUi(){
         playerBoard,
         opponentBoard,
         renderBoard,
+
+        attack,
+        computerAttack,
+        changeCurrentPlayer,
+
         isGameOver: gameController.isGameOver,
-        get currentPlayer(){
+
+        get currentPlayer() {
             return gameController.currentPlayer
         },
-        attack,
-        changeCurrentPlayer,
     }
 }

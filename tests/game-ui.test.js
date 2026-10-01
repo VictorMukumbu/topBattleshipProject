@@ -186,3 +186,21 @@ test(`attack() followed by changeCurrentPlayer() changes the turn.`,()=>{
 
     expect(ui.currentPlayer).not.toBe(firstPlayer)
 })
+test(`GameUi provides a computerAttack function`, () => {
+    const ui = GameUi()
+
+    expect(Object.hasOwn(ui, "computerAttack")).toBe(true)
+})
+test(`computerAttack attacks the player's board`, () => {
+    const ui = GameUi()
+
+    ui.changeCurrentPlayer()
+
+    ui.computerAttack()
+
+    const attacks =
+        ui.playerBoard.missedAttacks.length +
+        ui.playerBoard.hitAttacks.length
+
+    expect(attacks).toBe(1)
+})
