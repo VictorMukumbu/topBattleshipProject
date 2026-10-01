@@ -715,5 +715,12 @@ test(`selectShip selects a ship for placement`, () => {
     expect(selectedShip).toBe(ship)
     expect(ui.selectedShip).toBe(ship)
 })
+test(`DomUi creates a fleet for the human player`, () => {
+    const ui = DomUi()
+
+    expect(ui.playerFleet).toHaveLength(5)
+    expect(ui.playerFleet.map(ship => ship.length))
+        .toEqual([5, 4, 3, 3, 2])
+})
 
 

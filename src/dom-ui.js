@@ -1,8 +1,10 @@
 import { GameUi } from "./game-ui";
 import { placeShipLogic } from "./ship-placement";
+import { createFleet } from "./fleet";
 
 export function DomUi() {
     const ui = GameUi()
+    const playerFleet = createFleet()
 
     let placeShipDirection = "horizontal"
     let selectedStartCoordinate = null
@@ -208,5 +210,6 @@ export function DomUi() {
 
         changePlaceShipDirection,
         selectShip,
+        playerFleet,
     }
 }
