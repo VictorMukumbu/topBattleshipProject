@@ -750,4 +750,29 @@ test(`clicking a player board cell places the selected ship`, () => {
 
     expect(ui.ui.playerBoard.ships[0].ship).toBe(ship)
 })
+test(`placing a ship removes it from available ships`, () => {
+    const ui = DomUi()
+
+    const ship = ui.playerFleet[0]
+
+    ui.selectShip(ship)
+    ui.boardContainer.children[0].click()
+
+    expect(ui.availableShips).not.toContain(ship)
+    expect(ui.fleetContainer.children).toHaveLength(4)
+})
+test(`invalid ship placement keeps the ship available`, () => {
+    const ui = DomUi()
+
+    const ship = ui.playerFleet[0]
+
+    ui.selectShip(ship)
+    ui.changePlaceShipDirection()
+
+    ui.boardContainer.children[32].click()
+
+    expect(ui.availableShips).toContain(ship)
+    expect(ui.ui.playerBoard.ships).toHaveLength(0)
+})
+
 

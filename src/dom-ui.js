@@ -6,6 +6,7 @@ export function DomUi() {
     const ui = GameUi()
 
     const playerFleet = createFleet()
+    let availableShips = [...playerFleet]
 
     let placeShipDirection = "horizontal"
     let selectedStartCoordinate = null
@@ -138,7 +139,7 @@ export function DomUi() {
     function renderFleet() {
         fleetContainer.innerHTML = ""
 
-        playerFleet.forEach((ship, index) => {
+        availableShips.forEach((ship, index) => {
             const button = document.createElement("button")
 
             button.classList.add("ship-selection")
@@ -200,9 +201,15 @@ export function DomUi() {
 
         ui.playerBoard.placeShip(ship, coordinates)
 
+        availableShips = availableShips.filter(
+            availableShip => availableShip !== ship
+        )
+
+        selectedShip = null
         selectedStartCoordinate = null
 
         renderBoard(ui.playerBoard)
+        renderFleet()
 
         return coordinates
     }
@@ -247,6 +254,10 @@ export function DomUi() {
         },
 
         playerFleet,
+
+        get availableShips() {
+            return availableShips
+        },
 
         changePlaceShipDirection,
     }
