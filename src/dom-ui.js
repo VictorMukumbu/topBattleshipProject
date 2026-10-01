@@ -15,9 +15,10 @@ export function DomUi() {
     document.body.appendChild(directionButton)
 
     directionButton.addEventListener("click", () => {
-        ui.changePlaceShipDirection()
+        changePlaceShipDirection()
+
         directionButton.textContent =
-            ui.placeShipDirection === "horizontal"
+            placeShipDirection === "horizontal"
                 ? "Vertical"
                 : "Horizontal"
     })

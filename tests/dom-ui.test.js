@@ -635,6 +635,81 @@ test(`DomUi() provides a ship direction control`, () => {
     expect(ui.directionButton).toBeDefined()
     expect(ui.directionButton.tagName).toBe("BUTTON")
 })
+test(`clicking the direction button changes ship orientation`, () => {
+    const ui = DomUi()
+
+    expect(ui.placeShipDirection).toBe("horizontal")
+
+    ui.directionButton.click()
+
+    expect(ui.placeShipDirection).toBe("vertical")
+
+    ui.directionButton.click()
+
+    expect(ui.placeShipDirection).toBe("horizontal")
+})
+test(`direction button updates its label when orientation changes`, () => {
+    const ui = DomUi()
+
+    expect(ui.directionButton.textContent).toBe("Vertical")
+
+    ui.directionButton.click()
+
+    expect(ui.directionButton.textContent).toBe("Horizontal")
+
+    ui.directionButton.click()
+
+    expect(ui.directionButton.textContent).toBe("Vertical")
+})
+test(`invalid placement keeps the selected starting coordinate`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.boardContainer.children[22].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.startCoordinate).toEqual([2, 6])
+    expect(ui.ui.playerBoard.ships).toHaveLength(0)
+})
+test(`placeShip() renders a successfully placed ship`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.boardContainer.children[19].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.boardContainer.children[19].classList.contains("ship"))
+        .toBe(true)
+
+    expect(ui.boardContainer.children[20].classList.contains("ship"))
+        .toBe(true)
+
+    expect(ui.boardContainer.children[21].classList.contains("ship"))
+        .toBe(true)
+})
+test(`direction button controls the direction used for ship placement`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.directionButton.click()
+
+    ui.boardContainer.children[19].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.ui.playerBoard.ships[0].coordinates).toEqual([
+        [2, 3],
+        [3, 3],
+        [4, 3]
+    ])
+})
+
+
 
 
 
