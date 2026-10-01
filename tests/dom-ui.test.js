@@ -478,3 +478,28 @@ test(`computer player does not repeat an attacked coordinate`, () => {
     expect(attacks).toHaveLength(2)
     expect(attacks[1]).not.toEqual([0, 0])
 })
+test(`computer does not attack after the human wins`, () => {
+    const ui = DomUi()
+
+    const ship = {
+        hits: 0,
+        length: 1,
+        hit() {
+            this.hits += 1
+        },
+        isSunk() {
+            return this.hits === this.length
+        }
+    }
+
+    ui.ui.opponentBoard.placeShip(ship, [[0, 0]])
+
+    ui.opponentBoardContainer.children[0].click()
+
+    expect(ui.ui.isGameOver()).toBe(true)
+
+    expect(
+        ui.ui.playerBoard.missedAttacks.length +
+        ui.ui.playerBoard.hitAttacks.length
+    ).toBe(0)
+})
