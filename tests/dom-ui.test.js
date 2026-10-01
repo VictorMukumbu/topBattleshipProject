@@ -700,5 +700,10 @@ test(`playTurn attacks the opponent board`, () => {
 
     expect(opponentAttacks).toBe(1)
 })
+test(`DomUi starts with no selected ship`, () => {
+    const ui = DomUi()
+
+    expect(ui.selectedShip).toBeNull()
+})
 
 

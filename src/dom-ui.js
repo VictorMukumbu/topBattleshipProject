@@ -6,6 +6,7 @@ export function DomUi() {
 
     let placeShipDirection = "horizontal"
     let selectedStartCoordinate = null
+    let selectedShip = null
 
     let boardContainer =
         document.querySelector("#player-board") ||
@@ -194,6 +195,10 @@ export function DomUi() {
 
         get startCoordinate() {
             return selectedStartCoordinate
+        },
+
+        get selectedShip() {
+            return selectedShip
         },
 
         changePlaceShipDirection,
