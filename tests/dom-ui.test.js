@@ -629,6 +629,12 @@ test(`placeShip() uses the selected vertical direction`, () => {
         [4, 3]
     ])
 })
+test(`DomUi() provides a ship direction control`, () => {
+    const ui = DomUi()
+
+    expect(ui.directionButton).toBeDefined()
+    expect(ui.directionButton.tagName).toBe("BUTTON")
+})
 
 
 

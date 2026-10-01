@@ -10,6 +10,18 @@ export function DomUi() {
     let boardContainer = document.createElement("div")
     let opponentBoardContainer = document.createElement("div")
 
+    let directionButton = document.createElement("button")
+    directionButton.textContent = "Vertical"
+    document.body.appendChild(directionButton)
+
+    directionButton.addEventListener("click", () => {
+        ui.changePlaceShipDirection()
+        directionButton.textContent =
+            ui.placeShipDirection === "horizontal"
+                ? "Vertical"
+                : "Horizontal"
+    })
+
     boardContainer.classList.add("board")
     opponentBoardContainer.classList.add("board")
 
@@ -166,6 +178,7 @@ export function DomUi() {
         changePlaceShipDirection,
         get startCoordinate() {
             return selectedStartCoordinate
-        }
+        },
+        directionButton,
     }
 }
