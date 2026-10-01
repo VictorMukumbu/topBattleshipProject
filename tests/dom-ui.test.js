@@ -5,6 +5,21 @@
 import { DomUi } from "../src/dom-ui"
 import { Ship } from "../src/ship"
 
+function completeSetup(ui) {
+    const placements = [
+        [ui.playerFleet[0], 0],
+        [ui.playerFleet[1], 16],
+        [ui.playerFleet[2], 32],
+        [ui.playerFleet[3], 48],
+        [ui.playerFleet[4], 6],
+    ]
+
+    placements.forEach(([ship, cellIndex]) => {
+        ui.selectShip(ship)
+        ui.boardContainer.children[cellIndex].click()
+    })
+}
+
 test(`DomUi() accesses the GameUi`, () => {
     expect(Object.hasOwn(DomUi(), "ui")).toBe(true)
 })
@@ -266,6 +281,7 @@ test(`DomUi() renders multiple opponent board cell states`, () => {
 })
 test(`clicking an opponent cell attacks that coordinate`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     const ship = {
         hits: 0,
@@ -286,6 +302,7 @@ test(`clicking an opponent cell attacks that coordinate`, () => {
 })
 test(`clicking an opponent ship cell marks it as hit`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     const ship = {
         hits: 0,
@@ -309,6 +326,7 @@ test(`clicking an opponent ship cell marks it as hit`, () => {
 })
 test(`clicking an empty opponent cell marks it as missed`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     ui.opponentBoardContainer.children[28].click()
 
@@ -319,6 +337,7 @@ test(`clicking an empty opponent cell marks it as missed`, () => {
 })
 test(`clicking an opponent cell attacks its own coordinate`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     ui.opponentBoardContainer.children[63].click()
 
@@ -336,6 +355,7 @@ test(`clicking a player board cell does not attack the opponent`, () => {
 
 test(`clicking the same opponent cell twice does not create two attacks`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     ui.opponentBoardContainer.children[28].click()
     ui.opponentBoardContainer.children[28].click()
@@ -344,6 +364,7 @@ test(`clicking the same opponent cell twice does not create two attacks`, () => 
 })
 test(`a hit cell is not marked as missed`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     const ship = {
         hits: 0,
@@ -404,6 +425,7 @@ test(`DomUi() can change the current player`, () => {
 
 test(`computer player makes an attack after the human turn`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     const ship = {
         hits: 0,
@@ -437,6 +459,7 @@ test(`computer player makes an attack after the human turn`, () => {
 
 test(`computer does not attack after the human wins`, () => {
     const ui = DomUi()
+    completeSetup(ui)
 
     const ship = {
         hits: 0,
@@ -802,6 +825,17 @@ test(`DomUi reports setup complete when all ships are placed`, () => {
 
     expect(ui.availableShips).toHaveLength(0)
     expect(ui.isSetupComplete()).toBe(true)
+})
+test(`clicking an opponent cell does not start the game before setup is complete`, () => {
+    const ui = DomUi()
+
+    ui.opponentBoardContainer.children[0].click()
+
+    const playerBoard =
+        ui.ui.gameController.player1.board
+
+    expect(playerBoard.missedAttacks).toHaveLength(0)
+    expect(playerBoard.hitAttacks).toHaveLength(0)
 })
 
 

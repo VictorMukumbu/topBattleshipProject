@@ -108,6 +108,10 @@ export function DomUi() {
 
             if (board === ui.opponentBoard) {
                 cell.addEventListener("click", () => {
+                    if (!isSetupComplete()) {
+                        return
+                    }
+
                     if (ui.isGameOver()) {
                         return
                     }
@@ -217,6 +221,8 @@ export function DomUi() {
     function isSetupComplete() {
         return availableShips.length === 0
     }
+
+    
 
     // Initial rendering.
     renderBoards()
