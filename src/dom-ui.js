@@ -1,9 +1,11 @@
 import { GameUi } from "./game-ui";
 import { placeShipLogic } from "./ship-placement";
 import { createFleet } from "./fleet";
+import { setupComputerFleet } from "./setup-game";
 
 export function DomUi() {
     const ui = GameUi()
+    setupComputerFleet(ui.opponentBoard)
 
     const playerFleet = createFleet()
     let availableShips = [...playerFleet]

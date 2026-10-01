@@ -459,7 +459,8 @@ test(`computer player makes an attack after the human turn`, () => {
 
 test(`computer does not attack after the human wins`, () => {
     const ui = DomUi()
-    completeSetup(ui)
+
+    ui.ui.opponentBoard.ships = []
 
     const ship = {
         hits: 0,
@@ -474,6 +475,8 @@ test(`computer does not attack after the human wins`, () => {
 
     ui.ui.opponentBoard.placeShip(ship, [[0, 0]])
 
+    completeSetup(ui)
+
     ui.opponentBoardContainer.children[0].click()
 
     expect(ui.ui.isGameOver()).toBe(true)
@@ -483,6 +486,7 @@ test(`computer does not attack after the human wins`, () => {
         ui.ui.playerBoard.hitAttacks.length
     ).toBe(0)
 })
+
 
 test(`DomUi() provides a function for placing a ship`, () => {
     const ui = DomUi()
@@ -837,5 +841,34 @@ test(`clicking an opponent cell does not start the game before setup is complete
     expect(playerBoard.missedAttacks).toHaveLength(0)
     expect(playerBoard.hitAttacks).toHaveLength(0)
 })
+test(`DomUi() sets up the computer fleet`, () => {
+    const ui = DomUi()
+
+    expect(ui.ui.opponentBoard.ships).toHaveLength(5)
+})
+
+test(`DomUi() sets up computer ships with the correct lengths`, () => {
+    const ui = DomUi()
+
+    expect(
+        ui.ui.opponentBoard.ships.map(ship => ship.ship.length)
+    ).toEqual([5, 4, 3, 3, 2])
+})
+
+test(`DomUi() sets up computer ships without overlapping`, () => {
+    const ui = DomUi()
+
+    const coordinates =
+        ui.ui.opponentBoard.ships.flatMap(
+            ship => ship.coordinates
+        )
+
+    const uniqueCoordinates = new Set(
+        coordinates.map(coordinate => coordinate.join(","))
+    )
+
+    expect(uniqueCoordinates.size).toBe(coordinates.length)
+})
+
 
 
