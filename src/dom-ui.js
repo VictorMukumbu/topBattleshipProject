@@ -112,7 +112,8 @@ export function DomUi() {
             return "invalid"
         }
 
-        ui.playerBoard.placeShip(ship, coordinates)
+       ui.playerBoard.placeShip(ship, coordinates)
+        selectedStartCoordinate = null
         renderBoard(ui.playerBoard)
 
         return coordinates

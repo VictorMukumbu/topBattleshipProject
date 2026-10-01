@@ -601,5 +601,16 @@ test(`placeShip() uses the selected coordinate and direction`, () => {
         [2, 5]
     ])
 })
+test(`placeShip() clears the selected starting coordinate after a successful placement`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.boardContainer.children[19].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.startCoordinate).toBe(null)
+})
 
 
