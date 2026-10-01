@@ -1,8 +1,8 @@
 import { GameUi } from "./game-ui";
+import { placeShipLogic } from "./ship-placement";
 
 export function DomUi() {
     let ui = GameUi()
-    let selectedCoordinates = []
 
     let boardContainer = document.createElement("div")
     let opponentBoardContainer = document.createElement("div")
@@ -27,14 +27,7 @@ export function DomUi() {
         cell.dataset.column = Math.floor(i % 8)
 
         opponentCell.dataset.row = Math.floor(i / 8)
-        opponentCell.dataset.column = Math.floor(i % 8)
-
-        cell.addEventListener("click", () => {
-            selectedCoordinates.push([
-                Number(cell.dataset.row),
-                Number(cell.dataset.column)
-            ])
-        })
+        opponentCell.dataset.column = Math.floor(i % 8)        
 
         opponentCell.addEventListener("click", () => {
             ui.attack([
@@ -91,10 +84,26 @@ export function DomUi() {
         }
     }
 
-    function placeShip(ship) {
-        ui.playerBoard.placeShip(ship, [...selectedCoordinates])
-        selectedCoordinates.length = 0
+    function placeShip(ship, startCoordinate, direction) {
+        const occupiedCoordinates = ui.playerBoard.ships.flatMap(
+            shipEntry => shipEntry.coordinates
+        )
+
+        const coordinates = placeShipLogic(
+            startCoordinate,
+            ship.length,
+            direction,
+            occupiedCoordinates
+        )
+
+        if (coordinates === "invalid") {
+            return "invalid"
+        }
+
+        ui.playerBoard.placeShip(ship, coordinates)
         renderBoard(ui.playerBoard)
+
+        return coordinates
     }
 
     function computerAttack() {
@@ -121,7 +130,6 @@ export function DomUi() {
         boardContainer,
         opponentBoardContainer,
         renderBoard,
-        selectedCoordinates,
         placeShip,
 
         get currentPlayer() {

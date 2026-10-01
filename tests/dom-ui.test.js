@@ -3,6 +3,7 @@
  */
 
 import { DomUi } from "../src/dom-ui"
+import { Ship } from "../src/ship"
 
 test(`DomUi() accesses the GameUi`, () => {
     expect(Object.hasOwn(DomUi(), "ui")).toBe(true)
@@ -503,50 +504,66 @@ test(`computer does not attack after the human wins`, () => {
         ui.ui.playerBoard.hitAttacks.length
     ).toBe(0)
 })
-test(`clicking a player board cell selects that coordinate for ship placement`, () => {
-    const ui = DomUi()
 
-    ui.boardContainer.children[19].click()
-
-    expect(ui.selectedCoordinates).toContainEqual([2, 3])
-})
 test(`DomUi() provides a function for placing a ship`, () => {
     const ui = DomUi()
 
     expect(typeof ui.placeShip).toBe("function")
 })
-
-test(`placeShip() places a ship using the selected coordinates`, () => {
+test(`placeShip() calculates coordinates from a starting coordinate and direction`, () => {
     const ui = DomUi()
 
-    const ship = {
-        coordinates: [[2, 3], [2, 4], [2, 5]]
-    }
+    const ship = Ship(3)
 
-    ui.boardContainer.children[19].click()
-    ui.boardContainer.children[20].click()
-    ui.boardContainer.children[21].click()
+    ui.placeShip(ship, [2, 3], "horizontal")
 
-    ui.placeShip(ship)
+    expect(ui.ui.playerBoard.ships[0].coordinates).toEqual([
+        [2, 3],
+        [2, 4],
+        [2, 5]
+    ])
+})
+test(`placeShip() does not place a ship when the placement is invalid`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.placeShip(ship, [2, 6], "horizontal")
+
+    expect(ui.ui.playerBoard.ships).toHaveLength(0)
+})
+test(`placeShip() does not place a ship when it overlaps an existing ship`, () => {
+    const ui = DomUi()
+
+    const firstShip = Ship(3)
+    const secondShip = Ship(3)
+
+    ui.placeShip(firstShip, [2, 3], "horizontal")
+    ui.placeShip(secondShip, [2, 4], "horizontal")
 
     expect(ui.ui.playerBoard.ships).toHaveLength(1)
-    expect(ui.ui.playerBoard.ships[0].ship).toBe(ship)
-    expect(ui.ui.playerBoard.ships[0].coordinates)
-        .toEqual([[2, 3], [2, 4], [2, 5]])
+    expect(ui.ui.playerBoard.ships[0].ship).toBe(firstShip)
 })
-
-test(`placeShip() clears the selected coordinates after placing a ship`, () => {
+test(`placeShip() calculates vertical coordinates from a starting coordinate`, () => {
     const ui = DomUi()
 
-    const ship = {
-        coordinates: [[2, 3], [2, 4], [2, 5]]
-    }
+    const ship = Ship(3)
 
-    ui.boardContainer.children[19].click()
-    ui.boardContainer.children[20].click()
-    ui.boardContainer.children[21].click()
+    ui.placeShip(ship, [2, 3], "vertical")
 
-    ui.placeShip(ship)
-
-    expect(ui.selectedCoordinates).toHaveLength(0)
+    expect(ui.ui.playerBoard.ships[0].coordinates).toEqual([
+        [2, 3],
+        [3, 3],
+        [4, 3]
+    ])
 })
+test(`placeShip() does not place a ship with an invalid direction`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.placeShip(ship, [2, 3], "diagonal")
+
+    expect(ui.ui.playerBoard.ships).toHaveLength(0)
+})
+
