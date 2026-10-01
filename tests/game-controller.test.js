@@ -73,3 +73,27 @@ test(`GameController can report that the
             gameController.controllerAttack(coordinates)
             expect(ship.hits).toBe(1)
         })
+        test(`computerAttack makes an attack against player 1`, () => {
+    const controller = GameController()
+
+    controller.changeCurrentPlayer()
+
+    controller.computerAttack()
+
+    const attacks =
+        controller.player1.board.missedAttacks.length +
+        controller.player1.board.hitAttacks.length
+
+    expect(attacks).toBe(1)
+})
+test(`computerAttack does nothing when it is not the computer's turn`, () => {
+    const controller = GameController()
+
+    controller.computerAttack()
+
+    const attacks =
+        controller.player1.board.missedAttacks.length +
+        controller.player1.board.hitAttacks.length
+
+    expect(attacks).toBe(0)
+})
