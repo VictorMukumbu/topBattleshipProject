@@ -612,5 +612,23 @@ test(`placeShip() clears the selected starting coordinate after a successful pla
 
     expect(ui.startCoordinate).toBe(null)
 })
+test(`placeShip() uses the selected vertical direction`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.changePlaceShipDirection()
+
+    ui.boardContainer.children[19].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.ui.playerBoard.ships[0].coordinates).toEqual([
+        [2, 3],
+        [3, 3],
+        [4, 3]
+    ])
+})
+
 
 
