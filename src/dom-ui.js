@@ -4,6 +4,7 @@ import { createFleet } from "./fleet";
 
 export function DomUi() {
     const ui = GameUi()
+
     const playerFleet = createFleet()
 
     let placeShipDirection = "horizontal"
@@ -22,17 +23,20 @@ export function DomUi() {
     opponentBoardContainer.classList.add("board")
 
     let directionButton = document.createElement("button")
+
     directionButton.textContent = "Vertical"
+
     if (!directionButton.parentElement) {
         document.body.appendChild(directionButton)
     }
 
     let fleetContainer = document.createElement("div")
+
     fleetContainer.classList.add("fleet")
+
     if (!fleetContainer.parentElement) {
         document.body.appendChild(fleetContainer)
     }
-
 
     function changePlaceShipDirection() {
         if (placeShipDirection === "horizontal") {
@@ -52,6 +56,11 @@ export function DomUi() {
                 ? "Vertical"
                 : "Horizontal"
     })
+
+    function selectShip(ship) {
+        selectedShip = ship
+        return selectedShip
+    }
 
     function renderBoard(board) {
         let container =
@@ -89,6 +98,10 @@ export function DomUi() {
                         Number(cell.dataset.row),
                         Number(cell.dataset.column)
                     ]
+
+                    if (selectedShip !== null) {
+                        placeShip(selectedShip)
+                    }
                 })
             }
 
@@ -120,6 +133,26 @@ export function DomUi() {
     function renderBoards() {
         renderBoard(ui.playerBoard)
         renderBoard(ui.opponentBoard)
+    }
+
+    function renderFleet() {
+        fleetContainer.innerHTML = ""
+
+        playerFleet.forEach((ship, index) => {
+            const button = document.createElement("button")
+
+            button.classList.add("ship-selection")
+            button.dataset.shipIndex = index
+            button.textContent = `Ship ${ship.length}`
+
+            button.addEventListener("click", () => {
+                selectShip(ship)
+            })
+
+            fleetContainer.appendChild(button)
+        })
+
+        return fleetContainer
     }
 
     function playTurn(coordinate) {
@@ -176,42 +209,22 @@ export function DomUi() {
 
     // Initial rendering.
     renderBoards()
-
-    function selectShip(ship) {
-        selectedShip = ship
-        return selectedShip
-    }
-
-    function renderFleet() {
-        fleetContainer.innerHTML = ""
-
-        playerFleet.forEach((ship, index) => {
-            const button = document.createElement("button")
-
-            button.classList.add("ship-selection")
-            button.dataset.shipIndex = index
-            button.textContent = `Ship ${ship.length}`
-
-            button.addEventListener("click", () => {
-                selectShip(ship)
-            })
-
-            fleetContainer.appendChild(button)
-        })
-
-        return fleetContainer
-    }
+    renderFleet()
 
     return {
         ui,
         boardContainer,
         opponentBoardContainer,
         directionButton,
+        fleetContainer,
 
         renderBoard,
         renderBoards,
+        renderFleet,
         placeShip,
         playTurn,
+
+        selectShip,
 
         get currentPlayer() {
             return ui.currentPlayer
@@ -233,10 +246,8 @@ export function DomUi() {
             return selectedShip
         },
 
-        changePlaceShipDirection,
-        selectShip,
         playerFleet,
-        renderFleet,
-        fleetContainer,
+
+        changePlaceShipDirection,
     }
 }

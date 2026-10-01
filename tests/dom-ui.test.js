@@ -740,4 +740,14 @@ test(`clicking a ship button selects that ship`, () => {
 
     expect(ui.selectedShip).toBe(firstShip)
 })
+test(`clicking a player board cell places the selected ship`, () => {
+    const ui = DomUi()
+
+    const ship = ui.playerFleet[0]
+
+    ui.selectShip(ship)
+    ui.boardContainer.children[0].click()
+
+    expect(ui.ui.playerBoard.ships[0].ship).toBe(ship)
+})
 
