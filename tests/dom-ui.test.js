@@ -566,4 +566,25 @@ test(`placeShip() does not place a ship with an invalid direction`, () => {
 
     expect(ui.ui.playerBoard.ships).toHaveLength(0)
 })
+test(`DomUi() can change the ship placement direction`, () => {
+    const ui = DomUi()
+
+    expect(ui.placeShipDirection).toBe("horizontal")
+
+    ui.changePlaceShipDirection()
+
+    expect(ui.placeShipDirection).toBe("vertical")
+
+    ui.changePlaceShipDirection()
+
+    expect(ui.placeShipDirection).toBe("horizontal")
+})
+test(`clicking a player board cell selects the starting coordinate`, () => {
+    const ui = DomUi()
+
+    ui.boardContainer.children[19].click()
+
+    expect(ui.startCoordinate).toEqual([2, 3])
+})
+
 

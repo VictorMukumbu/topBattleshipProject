@@ -4,6 +4,9 @@ import { placeShipLogic } from "./ship-placement";
 export function DomUi() {
     let ui = GameUi()
 
+    let placeShipDirection = "horizontal"
+    let startCoordinate = null
+
     let boardContainer = document.createElement("div")
     let opponentBoardContainer = document.createElement("div")
 
@@ -27,7 +30,14 @@ export function DomUi() {
         cell.dataset.column = Math.floor(i % 8)
 
         opponentCell.dataset.row = Math.floor(i / 8)
-        opponentCell.dataset.column = Math.floor(i % 8)        
+        opponentCell.dataset.column = Math.floor(i % 8) 
+        
+        cell.addEventListener("click", () => {
+            startCoordinate = [
+                Number(cell.dataset.row),
+                Number(cell.dataset.column)
+            ]
+        })
 
         opponentCell.addEventListener("click", () => {
             ui.attack([
@@ -125,19 +135,34 @@ export function DomUi() {
         renderBoard(ui.playerBoard)
     }
 
+    function changePlaceShipDirection() {
+        if (placeShipDirection === "horizontal") {
+            placeShipDirection = "vertical"
+        } else {
+            placeShipDirection = "horizontal"
+        }
+
+        return placeShipDirection
+    }
+
     return {
         ui,
         boardContainer,
         opponentBoardContainer,
         renderBoard,
         placeShip,
-
         get currentPlayer() {
             return ui.currentPlayer
         },
-
         changeCurrentPlayer() {
             return ui.changeCurrentPlayer()
+        },
+        get placeShipDirection() {
+            return placeShipDirection
+        },
+        changePlaceShipDirection,
+        get startCoordinate() {
+            return startCoordinate
         }
     }
 }
