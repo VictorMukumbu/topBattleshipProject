@@ -5,7 +5,7 @@ export function DomUi() {
     let ui = GameUi()
 
     let placeShipDirection = "horizontal"
-    let startCoordinate = null
+    let selectedStartCoordinate = null
 
     let boardContainer = document.createElement("div")
     let opponentBoardContainer = document.createElement("div")
@@ -33,7 +33,7 @@ export function DomUi() {
         opponentCell.dataset.column = Math.floor(i % 8) 
         
         cell.addEventListener("click", () => {
-            startCoordinate = [
+            selectedStartCoordinate = [
                 Number(cell.dataset.row),
                 Number(cell.dataset.column)
             ]
@@ -94,7 +94,9 @@ export function DomUi() {
         }
     }
 
-    function placeShip(ship, startCoordinate, direction) {
+    function placeShip(ship, 
+        startCoordinate=selectedStartCoordinate,
+        direction=placeShipDirection) {
         const occupiedCoordinates = ui.playerBoard.ships.flatMap(
             shipEntry => shipEntry.coordinates
         )
@@ -162,7 +164,7 @@ export function DomUi() {
         },
         changePlaceShipDirection,
         get startCoordinate() {
-            return startCoordinate
+            return selectedStartCoordinate
         }
     }
 }

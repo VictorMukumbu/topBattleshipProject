@@ -586,5 +586,20 @@ test(`clicking a player board cell selects the starting coordinate`, () => {
 
     expect(ui.startCoordinate).toEqual([2, 3])
 })
+test(`placeShip() uses the selected coordinate and direction`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    ui.boardContainer.children[19].click()
+
+    ui.placeShip(ship)
+
+    expect(ui.ui.playerBoard.ships[0].coordinates).toEqual([
+        [2, 3],
+        [2, 4],
+        [2, 5]
+    ])
+})
 
 
