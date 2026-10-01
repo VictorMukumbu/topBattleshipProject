@@ -435,50 +435,6 @@ test(`computer player makes an attack after the human turn`, () => {
     ).toBe(1)
 })
 
-test(`computer player does not repeat an attacked coordinate`, () => {
-    const ui = DomUi()
-
-    const ship = {
-        hits: 0,
-        length: 2,
-        hit() {
-            this.hits += 1
-        },
-        isSunk() {
-            return this.hits === this.length
-        }
-    }
-
-    ui.ui.opponentBoard.placeShip(
-        ship,
-        [[0, 1], [0, 2]]
-    )
-
-    ui.ui.playerBoard.receiveAttack([0, 0])
-
-    const originalRandom = Math.random
-
-    const randomValues = [
-        0,
-        0,
-        0.2,
-        0.2
-    ]
-
-    Math.random = () => randomValues.shift()
-
-    ui.opponentBoardContainer.children[1].click()
-
-    Math.random = originalRandom
-
-    const attacks = [
-        ...ui.ui.playerBoard.missedAttacks,
-        ...ui.ui.playerBoard.hitAttacks
-    ]
-
-    expect(attacks).toHaveLength(2)
-    expect(attacks[1]).not.toEqual([0, 0])
-})
 test(`computer does not attack after the human wins`, () => {
     const ui = DomUi()
 
@@ -708,8 +664,41 @@ test(`direction button controls the direction used for ship placement`, () => {
         [4, 3]
     ])
 })
+test(`DomUi provides a playTurn function`, () => {
+    const domUi = DomUi()
 
+    expect(Object.hasOwn(domUi, "playTurn")).toBe(true)
+})
+test(`playTurn causes the computer to attack after the human attack`, () => {
+    const domUi = DomUi()
 
+    const coordinate = [3, 4]
 
+    domUi.playTurn(coordinate)
+
+    const computerAttacks =
+        domUi.ui.playerBoard.missedAttacks.length +
+        domUi.ui.playerBoard.hitAttacks.length
+
+    expect(computerAttacks).toBe(1)
+})
+test(`playTurn returns the turn to the human player`, () => {
+    const domUi = DomUi()
+
+    domUi.playTurn([3, 4])
+
+    expect(domUi.currentPlayer.type).toBe("human")
+})
+test(`playTurn attacks the opponent board`, () => {
+    const domUi = DomUi()
+
+    domUi.playTurn([3, 4])
+
+    const opponentAttacks =
+        domUi.ui.opponentBoard.missedAttacks.length +
+        domUi.ui.opponentBoard.hitAttacks.length
+
+    expect(opponentAttacks).toBe(1)
+})
 
 

@@ -18,10 +18,18 @@ export function GameController() {
 
     function isGameOver() {
         if (currentPlayer === player1) {
+            if (player2.board.ships.length === 0) {
+                return false
+            }
+
             return player2.board.allShipsSunk()
         }
 
         if (currentPlayer === player2) {
+            if (player1.board.ships.length === 0) {
+                return false
+            }
+
             return player1.board.allShipsSunk()
         }
     }

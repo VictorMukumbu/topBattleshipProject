@@ -64,9 +64,7 @@ export function DomUi() {
             cell.dataset.column = cellData.coordinate[1]
 
             if (cellData.occupied) {
-                if (board === ui.playerBoard) {
-                    cell.classList.add("ship")
-                }
+                cell.classList.add("ship")
             }
 
             if (cellData.hit) {
@@ -167,6 +165,9 @@ export function DomUi() {
 
         return coordinates
     }
+
+    // Initial rendering.
+    renderBoards()
 
     return {
         ui,
