@@ -13,9 +13,23 @@
     <main>
         <h1>Battleship</h1>
 
-        <div id="player-board"></div>
+        <div id="game-status"></div>
 
-        <div id="opponent-board"></div>
+        <button id="direction-button">
+            Vertical
+        </button>
+
+        <div id="fleet"></div>
+
+        <section>
+            <h2>Your Fleet</h2>
+            <div id="player-board"></div>
+        </section>
+
+        <section>
+            <h2>Enemy Fleet</h2>
+            <div id="opponent-board"></div>
+        </section>
     </main>
 
     <script
@@ -23,4 +37,5 @@
         src="./src/index.js"
     ></script>
 </body>
+
 </html>

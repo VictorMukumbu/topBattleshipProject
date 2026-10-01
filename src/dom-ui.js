@@ -25,15 +25,17 @@ export function DomUi() {
     boardContainer.classList.add("board")
     opponentBoardContainer.classList.add("board")
 
-    let directionButton = document.createElement("button")
-
+    let directionButton =
+    document.querySelector("#direction-button") ||
+    document.createElement("button")
     directionButton.textContent = "Vertical"
-
     if (!directionButton.parentElement) {
         document.body.appendChild(directionButton)
     }
 
-    let fleetContainer = document.createElement("div")
+    let fleetContainer =
+    document.querySelector("#fleet") ||
+    document.createElement("div")
 
     fleetContainer.classList.add("fleet")
 
@@ -41,7 +43,8 @@ export function DomUi() {
         document.body.appendChild(fleetContainer)
     }
 
-    let gameStatus = document.createElement("div")
+    let gameStatus =  document.querySelector("#game-status") ||
+     document.createElement("div")
     gameStatus.classList.add("game-status")
     if (!gameStatus.parentElement) {
         document.body.appendChild(gameStatus)
