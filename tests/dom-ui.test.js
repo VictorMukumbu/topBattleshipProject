@@ -705,5 +705,15 @@ test(`DomUi starts with no selected ship`, () => {
 
     expect(ui.selectedShip).toBeNull()
 })
+test(`selectShip selects a ship for placement`, () => {
+    const ui = DomUi()
+
+    const ship = Ship(3)
+
+    const selectedShip = ui.selectShip(ship)
+
+    expect(selectedShip).toBe(ship)
+    expect(ui.selectedShip).toBe(ship)
+})
 
 

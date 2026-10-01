@@ -170,6 +170,11 @@ export function DomUi() {
     // Initial rendering.
     renderBoards()
 
+    function selectShip(ship) {
+        selectedShip = ship
+        return selectedShip
+    }
+
     return {
         ui,
         boardContainer,
@@ -202,5 +207,6 @@ export function DomUi() {
         },
 
         changePlaceShipDirection,
+        selectShip,
     }
 }
