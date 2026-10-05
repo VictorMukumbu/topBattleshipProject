@@ -50,6 +50,37 @@ export function DomUi() {
         document.body.appendChild(gameStatus)
     }
 
+    let gameOverModal =
+        document.querySelector("#game-over-modal") ||
+        document.createElement("div")
+
+    gameOverModal.classList.add("game-over-modal")
+
+    gameOverModal.innerHTML = `
+        <div class="game-over-content">
+            <h2>Game Over!</h2>
+            <button type="button" id="play-again">
+                Play Again
+            </button>
+        </div>
+    `
+
+    if (!gameOverModal.parentElement) {
+        gameStatus.insertAdjacentElement(
+            "afterend",
+            gameOverModal
+        )
+    }
+
+    let playAgainButton =
+        gameOverModal.querySelector("#play-again")
+
+    gameOverModal.hidden = true
+
+    playAgainButton.addEventListener("click", () => {
+        window.location.reload()
+    })
+
     function changePlaceShipDirection() {
         if (placeShipDirection === "horizontal") {
             placeShipDirection = "vertical"
@@ -247,19 +278,21 @@ export function DomUi() {
     }
 
     function renderGameStatus() {
+        if (ui.isGameOver()) {
+            gameStatus.textContent = ""
+            gameOverModal.hidden = false
+            return
+        }
+
+        gameOverModal.hidden = true
+
         if (!isSetupComplete()) {
             gameStatus.textContent = "Place all your ships."
             return
         }
 
-        if (ui.isGameOver()) {
-            gameStatus.textContent = "Game over!"
-            return
-        }
-
         gameStatus.textContent = "Your turn."
     }
-
     // Initial rendering.
     renderBoards()
     renderFleet()
@@ -310,5 +343,8 @@ export function DomUi() {
         isSetupComplete,
         gameStatus,
         renderGameStatus,
+        
+        gameOverModal,
+        playAgainButton,
     }
 }

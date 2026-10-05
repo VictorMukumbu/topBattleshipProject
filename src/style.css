@@ -72,6 +72,49 @@ section h2 {
     font-weight: bold;
 }
 
+.game-over-modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 1000;
+}
+
+.game-over-modal[hidden] {
+    display: none;
+}
+
+.game-over-content {
+    width: min(90%, 360px);
+    padding: 32px 24px;
+
+    text-align: center;
+
+    background: white;
+    border: 2px solid black;
+}
+
+.game-over-content h2 {
+    margin: 0 0 20px;
+}
+
+#play-again {
+    min-height: 44px;
+    padding: 10px 24px;
+    cursor: pointer;
+}
+
 /*
  * MOBILE FIRST
  *
@@ -136,6 +179,10 @@ section h2 {
 #opponent-board .cell.ship:hover {
     background: #ddd;
 }
+#opponent-board .cell.ship.hit {
+    background: red;
+}
+
 
 
 /*

@@ -894,7 +894,7 @@ test(`DomUi() shows the player's turn after setup is complete`, () => {
         .toBe("Your turn.")
 })
 
-test(`DomUi() shows game over when the human wins`, () => {
+test(`DomUi() shows game over modal when the human wins`, () => {
     const ui = DomUi()
 
     ui.ui.opponentBoard.ships = []
@@ -911,8 +911,12 @@ test(`DomUi() shows game over when the human wins`, () => {
     ui.opponentBoardContainer.children[0].click()
 
     expect(ui.gameStatus.textContent)
-        .toBe("Game over!")
+        .toBe("")
+
+    expect(ui.gameOverModal.hidden)
+        .toBe(false)
 })
+
 test(`clicking a ship selection marks it as selected`, () => {
     const ui = DomUi()
 
