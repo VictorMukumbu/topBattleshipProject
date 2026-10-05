@@ -1,4 +1,4 @@
-import { createFleet } from "./fleet"
+import { createFleet } from "./fleet.js"
 
 export function setupComputerFleet(board) {
     const fleet = createFleet()

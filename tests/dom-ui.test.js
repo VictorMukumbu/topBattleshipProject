@@ -913,6 +913,237 @@ test(`DomUi() shows game over when the human wins`, () => {
     expect(ui.gameStatus.textContent)
         .toBe("Game over!")
 })
+test(`clicking a ship selection marks it as selected`, () => {
+    const ui = DomUi()
+
+    const firstShipButton =
+        ui.fleetContainer.children[0]
+
+    firstShipButton.click()
+
+    expect(
+        firstShipButton.classList.contains("selected")
+    ).toBe(true)
+})
+
+test(`selecting another ship removes the previous selected state`, () => {
+    const ui = DomUi()
+
+    const firstShipButton =
+        ui.fleetContainer.children[0]
+
+    const secondShipButton =
+        ui.fleetContainer.children[1]
+
+    firstShipButton.click()
+    secondShipButton.click()
+
+    expect(
+        firstShipButton.classList.contains("selected")
+    ).toBe(false)
+
+    expect(
+        secondShipButton.classList.contains("selected")
+    ).toBe(true)
+})
+test(`direction button initially shows Vertical`, () => {
+    const ui = DomUi()
+
+    expect(ui.directionButton.textContent)
+        .toBe("Vertical")
+})
+
+test(`clicking the direction button changes its label`, () => {
+    const ui = DomUi()
+
+    ui.directionButton.click()
+
+    expect(ui.directionButton.textContent)
+        .toBe("Horizontal")
+})
+
+test(`clicking the direction button twice returns to Vertical`, () => {
+    const ui = DomUi()
+
+    ui.directionButton.click()
+    ui.directionButton.click()
+
+    expect(ui.directionButton.textContent)
+        .toBe("Vertical")
+})
+test(`selecting a ship and clicking a board cell places the ship`, () => {
+    const ui = DomUi()
+
+    const ship = ui.playerFleet[0]
+    const shipButton = ui.fleetContainer.children[0]
+
+    shipButton.click()
+
+    ui.boardContainer.children[0].click()
+
+    expect(ui.ui.playerBoard.ships).toHaveLength(1)
+
+    expect(
+        ui.ui.playerBoard.ships[0].ship
+    ).toBe(ship)
+
+    expect(
+        ui.ui.playerBoard.ships[0].coordinates
+    ).toEqual([
+        [0, 0],
+        [0, 1],
+        [0, 2],
+        [0, 3],
+        [0, 4]
+    ])
+})
+
+test(`placed ship is removed from the fleet selection`, () => {
+    const ui = DomUi()
+
+    const shipButton = ui.fleetContainer.children[0]
+
+    shipButton.click()
+    ui.boardContainer.children[0].click()
+
+    expect(ui.availableShips).toHaveLength(4)
+
+    expect(ui.fleetContainer.children).toHaveLength(4)
+})
+test(`invalid ship placement does not add a ship to the board`, () => {
+    const ui = DomUi()
+
+    const firstShip = ui.playerFleet[0]
+    const secondShip = ui.playerFleet[1]
+
+    // Place the first ship.
+    ui.selectShip(firstShip)
+    ui.boardContainer.children[0].click()
+
+    // Attempt to place the second ship
+    // on top of the first ship.
+    ui.selectShip(secondShip)
+    ui.boardContainer.children[0].click()
+
+    expect(ui.ui.playerBoard.ships)
+        .toHaveLength(1)
+
+    expect(ui.availableShips)
+        .toHaveLength(4)
+})
+
+test(`ship is not placed when it extends beyond the board`, () => {
+    const ui = DomUi()
+
+    const ship = ui.playerFleet[0]
+
+    ui.selectShip(ship)
+
+    // Row 0, column 4.
+    // A length-5 horizontal ship would
+    // extend beyond column 7.
+    ui.boardContainer.children[4].click()
+
+    expect(ui.ui.playerBoard.ships)
+        .toHaveLength(0)
+
+    expect(ui.availableShips)
+        .toHaveLength(5)
+})
+test(`clicking an opponent cell records a missed attack`, () => {
+    const ui = DomUi()
+
+    completeSetup(ui)
+
+    ui.opponentBoardContainer.children[63].click()
+
+    expect(
+        ui.ui.opponentBoard.missedAttacks
+    ).toContainEqual([7, 7])
+
+    const renderedOpponentCell =
+        ui.opponentBoardContainer.children[63]
+
+    expect(
+        renderedOpponentCell.classList.contains("missed")
+    ).toBe(true)
+})
+test(`clicking an opponent ship records a hit`, () => {
+    const ui = DomUi()
+
+    const ship = ui.ui.opponentBoard.ships[0]
+    const coordinate = ship.coordinates[0]
+
+    completeSetup(ui)
+
+    const cellIndex =
+        coordinate[0] * 8 + coordinate[1]
+
+    ui.opponentBoardContainer
+        .children[cellIndex]
+        .click()
+
+    expect(
+        ui.ui.opponentBoard.hitAttacks
+    ).toContainEqual(coordinate)
+
+    const renderedOpponentCell =
+        ui.opponentBoardContainer.children[cellIndex]
+
+    expect(
+        renderedOpponentCell.classList.contains("hit")
+    ).toBe(true)
+})
+test(`computer attacks after the player takes a turn`, () => {
+    const ui = DomUi()
+
+    completeSetup(ui)
+
+    const opponentCell =
+        ui.opponentBoardContainer.children[63]
+
+    opponentCell.click()
+
+    const playerBoard =
+        ui.ui.playerBoard
+
+    expect(
+        playerBoard.missedAttacks.length +
+        playerBoard.hitAttacks.length
+    ).toBe(1)
+})
+test(`computer attack is rendered on the player's board`, () => {
+    const ui = DomUi()
+
+    completeSetup(ui)
+
+    ui.opponentBoardContainer.children[63].click()
+
+    const playerBoard = ui.ui.playerBoard
+
+    const attackedCoordinates = [
+        ...playerBoard.missedAttacks,
+        ...playerBoard.hitAttacks
+    ]
+
+    expect(attackedCoordinates).toHaveLength(1)
+
+    const coordinate = attackedCoordinates[0]
+
+    const cellIndex =
+        coordinate[0] * 8 + coordinate[1]
+
+    const playerCell =
+        ui.boardContainer.children[cellIndex]
+
+    expect(
+        playerCell.classList.contains("missed") ||
+        playerCell.classList.contains("hit")
+    ).toBe(true)
+})
+
+
+
 
 
 

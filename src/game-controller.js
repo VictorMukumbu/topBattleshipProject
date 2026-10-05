@@ -1,4 +1,4 @@
-import { Player } from "./player";
+import { Player } from "./player.js";
 
 export function GameController() {
     let player1 = Player("human")

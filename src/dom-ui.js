@@ -1,7 +1,7 @@
-import { GameUi } from "./game-ui";
-import { placeShipLogic } from "./ship-placement";
-import { createFleet } from "./fleet";
-import { setupComputerFleet } from "./setup-game";
+import { GameUi } from "./game-ui.js";
+import { placeShipLogic } from "./ship-placement.js";
+import { createFleet } from "./fleet.js";
+import { setupComputerFleet } from "./setup-game.js";
 
 export function DomUi() {
     const ui = GameUi()
@@ -161,9 +161,18 @@ export function DomUi() {
             button.dataset.shipIndex = index
             button.textContent = `Ship ${ship.length}`
 
-            button.addEventListener("click", () => {
-                selectShip(ship)
-            })
+        button.addEventListener("click", () => {
+            selectShip(ship)
+
+            document
+                .querySelectorAll(".ship-selection")
+                .forEach(button => {
+                    button.classList.remove("selected")
+                })
+
+            button.classList.add("selected")
+        })
+
 
             fleetContainer.appendChild(button)
         })
